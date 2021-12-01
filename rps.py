@@ -1,4 +1,6 @@
 import random
+import PySimpleGUI as sg
+
 
 user_action = input("Player choice: rock, paper, scissors:\n")
 possible_actions = ['rock', 'paper', 'scissor']
