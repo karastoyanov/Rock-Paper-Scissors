@@ -7,7 +7,7 @@ possible_actions = ['rock', 'paper', 'scissor']
 computer_action = random.choice(possible_actions)
 player_wins = 0
 computer_wins = 0
-
+d = 0
 
 print(f"\nYou chose {user_action}.\nComputer chose {computer_action}.\n")
 game_on = True
