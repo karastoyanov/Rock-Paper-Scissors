@@ -12,4 +12,5 @@ Main Changes Log:
 
 02/12/2021:
 -GUI created and set for UI objects;
+
 -RPS main mechanics created;
