@@ -1,6 +1,8 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import sys
+import random
+
 
 
 class App:
@@ -96,16 +98,44 @@ class App:
 
 
     def rockButton_command(self):
-        print("command")
+        player_choice = "rock"
+        possible_actions = ['rock', 'paper', 'scissors']
+        computer_action = random.choice(possible_actions)
+        if computer_action == "rock":
+            print('Tie!')
+        elif computer_action == "paper":
+            print("Computer wins!")
+        elif computer_action == "scissors":
+            print("Player wins!")
+        return App
 
 
     def paperButton_command(self):
-        print("command")
-
+        player_choice = 'paper'
+        possible_actions = ['rock', 'paper', 'scissors']
+        computer_action = random.choice(possible_actions)
+        if computer_action == "rock":
+            print("Player wins!")
+        elif computer_action == "paper":
+            print("Tie!")
+        elif computer_action == "scissors":
+            print("Computer wins!")
+        return App
 
     def scissorsButton_command(self):
-        print("command")
+        player_choice = 'paper'
+        possible_actions = ['rock', 'paper', 'scissors']
+        computer_action = random.choice(possible_actions)
+        if computer_action == "rock":
+            print("Player wins!")
+        elif computer_action == "paper":
+            print("Tie")
+        elif computer_action == "scissors":
+            print("Computer wins!")
+        return App
 
+
+    
 if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)
