@@ -3,7 +3,8 @@ import tkinter.font as tkFont
 import sys
 import random
 
-
+computer_wins = 0
+player_wins = 0
 
 class App:
     def __init__(self, root):
@@ -96,46 +97,55 @@ class App:
     def exitButton_command(self):
         return sys.exit()
 
-
     def rockButton_command(self):
+        global computer_wins 
+        global player_wins 
         player_choice = "rock"
         possible_actions = ['rock', 'paper', 'scissors']
         computer_action = random.choice(possible_actions)
         if computer_action == "rock":
-            print('Tie!')
+            print('Tie!')         
         elif computer_action == "paper":
-            print("Computer wins!")
+            computer_wins += 1
+            print(f"Computer wins! {computer_wins}")
         elif computer_action == "scissors":
-            print("Player wins!")
+            player_wins +=1
+            print(f"Player wins! {player_wins}")      
         return App
 
-
     def paperButton_command(self):
+        global computer_wins 
+        global player_wins
         player_choice = 'paper'
         possible_actions = ['rock', 'paper', 'scissors']
         computer_action = random.choice(possible_actions)
         if computer_action == "rock":
-            print("Player wins!")
+            player_wins +=1
+            print(f"Player wins! {player_wins}")
         elif computer_action == "paper":
             print("Tie!")
         elif computer_action == "scissors":
-            print("Computer wins!")
+            computer_wins +=1
+            print(f"Computer wins! {computer_wins}")
         return App
 
     def scissorsButton_command(self):
+        global computer_wins 
+        global player_wins
         player_choice = 'paper'
         possible_actions = ['rock', 'paper', 'scissors']
         computer_action = random.choice(possible_actions)
         if computer_action == "rock":
-            print("Player wins!")
+            player_wins +=1
+            print(f"Player wins! {player_wins}")
         elif computer_action == "paper":
             print("Tie")
         elif computer_action == "scissors":
-            print("Computer wins!")
+            computer_wins += 1
+            print(f"Computer wins! {computer_wins}")
         return App
 
 
-    
 if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)
