@@ -22,7 +22,6 @@ class App:
 
         
         exitButton=tk.Button(root)
-        exitButton["image"] = "F:\Python_Projects\Personal Projects\Rock,Paper,Scissors\Rock-Paper-Scissors\exit.jpg"
         exitButton["activebackground"] = "#ff5722"
         exitButton["activeforeground"] = "#000000"
         exitButton["bg"] = "red"
@@ -32,6 +31,10 @@ class App:
         exitButton["justify"] = "center"
         exitButton["text"] = "Quit Game"
         exitButton.place(x=500,y=450,width=70,height=25)
+        # im = Image.open("F:\Python_Projects\Personal Projects\Rock,Paper,Scissors\Rock-Paper-Scissors\exit_button.png")
+        # ph = ImageTk.PhotoImage(im)
+        # exitButton["bg"] = ph
+        # label = Label(window, image = ph)
         exitButton["command"] = self.exitButton_command
         
 
