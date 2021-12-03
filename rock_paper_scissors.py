@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
-from PIL import Image, ImageTk
+from tkinter import *
+from PIL import ImageTk
 import sys
 import random
 
@@ -9,6 +10,10 @@ player_wins = 0
 
 class App:
     def __init__(self, root):
+        icon_picture = PhotoImage(file = 'gamepad.png')
+        root.iconphoto(False, icon_picture)
+        
+        
         #setting title
         root.title("Game of Rock, Paper, Scissors")
         #setting window size
@@ -20,7 +25,6 @@ class App:
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
 
-        
         exitButton=tk.Button(root)
         exitButton["activebackground"] = "#ff5722"
         exitButton["activeforeground"] = "#000000"
@@ -31,10 +35,6 @@ class App:
         exitButton["justify"] = "center"
         exitButton["text"] = "Quit Game"
         exitButton.place(x=500,y=450,width=70,height=25)
-        # im = Image.open("F:\Python_Projects\Personal Projects\Rock,Paper,Scissors\Rock-Paper-Scissors\exit_button.png")
-        # ph = ImageTk.PhotoImage(im)
-        # exitButton["bg"] = ph
-        # label = Label(window, image = ph)
         exitButton["command"] = self.exitButton_command
         
 
@@ -119,6 +119,7 @@ class App:
             player_wins +=1
             print(f"Player wins! {player_wins}")      
         return App
+
 
     def paperButton_command(self):
         global computer_wins 
