@@ -12,7 +12,7 @@ Main Changes Log:
 
 03/12/2021:
 
--new GUI created
+-new GUI created(rock_paper_scissors_v2)
 
 -temporary graphical objectes added
 
