@@ -100,7 +100,12 @@ class App:
     scissors_button = Button(root, image = scissors_btn, command = scissorsButton_command, borderwidth = 0)
     scissors_button.place(x = 420, y = 200)
 
-    
+    last_game_label = Label(root,
+                            font = ("Bahnschrift 13"),
+                            justify = CENTER,
+                            text = "LAST GAME MESSAGE",
+                            padx = 0)
+    last_game_label.place(x = 220, y = 380)
     
     player_result = IntVar()
     player_result.set(player_wins)
