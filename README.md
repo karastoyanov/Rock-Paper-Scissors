@@ -10,6 +10,16 @@ GUI created with https://visualtk.com/
 
 Main Changes Log:
 
+03/12/2021:
+
+-new GUI created
+
+-temporary graphical objectes added
+
+-counting the result(works only in terminal, Label not updating)
+
+
+
 02/12/2021:
 
 -GUI created and set for UI objects;
