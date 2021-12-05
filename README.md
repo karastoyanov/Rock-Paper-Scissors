@@ -7,6 +7,7 @@ Game Description and Instructions:
 GUI created with https://visualtk.com/
 
 TO_DO:
+
 -new GUI objects
 
 -GUI tweeks(fonts, placement, background)
