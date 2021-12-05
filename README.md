@@ -7,9 +7,12 @@ Game Description and Instructions:
 GUI created with https://visualtk.com/
 
 TO_DO:
--new GUI objects;
+-new GUI objects
+
 -GUI tweeks(fonts, placement, background)
+
 -.pack() and place() to be fixed for all GUI objects
+
 -last game result message to be finished
 
 
