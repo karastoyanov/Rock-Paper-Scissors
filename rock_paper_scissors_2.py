@@ -30,10 +30,12 @@ class App:
             print('Tie!')         
         elif computer_action == "paper":
             computer_wins += 1
+            result_label.config(text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}")
             print(f"Computer wins! {computer_wins}")
         elif computer_action == "scissors":
             player_wins +=1
-            print(f"Player wins! {player_wins}")      
+            result_label.config(text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}")
+            print(f"Player wins! {player_wins}")         
         return App
     
     
@@ -45,11 +47,13 @@ class App:
         computer_action = random.choice(possible_actions)
         if computer_action == "rock":
             player_wins +=1
+            result_label.config(text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}")
             print(f"Player wins! {player_wins}")
         elif computer_action == "paper":
             print("Tie!")
         elif computer_action == "scissors":
             computer_wins +=1
+            result_label.config(text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}")
             print(f"Computer wins! {computer_wins}")
         return App
     
@@ -62,13 +66,19 @@ class App:
         computer_action = random.choice(possible_actions)
         if computer_action == "rock":
             player_wins +=1
+            result_label.config(text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}")
             print(f"Player wins! {player_wins}")
         elif computer_action == "paper":
             print("Tie")
         elif computer_action == "scissors":
             computer_wins += 1
+            result_label.config(text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}")
             print(f"Computer wins! {computer_wins}")
         return App
+    
+    
+    
+
     
     
     exit_btn = PhotoImage(file = "F:\Python_Projects\Personal Projects\Rock,Paper,Scissors\Rock-Paper-Scissors\exit.png")
@@ -107,27 +117,13 @@ class App:
                             padx = 0)
     last_game_label.place(x = 220, y = 380)
     
-    player_result = IntVar()
-    player_result.set(player_wins)
-    points_label = Label(root, 
-                        #  text = result,
-                         textvariable = player_result, 
+    global result_label
+    result_label = Label(root, 
+                         text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}",  
                          font = ("Verdana 10 bold"), 
                          justify = LEFT, 
-                         padx = 0)
-    points_label.place(x = 20, y = 440)
-    
-    computer_result = IntVar()
-    computer_result.set(computer_wins)
-    points_label_2 = Label(root, 
-                        #  text = result,
-                         textvariable = computer_result, 
-                         font = ("Verdana 10 bold"), 
-                         justify = LEFT, 
-                         padx = 0)
-    points_label_2.place(x = 20, y = 420)
-    
-    
-    
+                         padx = 20)
+    result_label.pack()
+
     
 mainloop()
