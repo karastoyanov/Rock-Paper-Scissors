@@ -9,6 +9,13 @@ import random
 computer_wins = 0
 player_wins = 0
 
+wins_player_list = ["Good job, solider!", 
+                    "Keep going, soldier! The world is counting on you!"
+                    ]
+wins_computer_list = ["Try harder, soldier!",
+                      "Bad luck, private!",
+                      "What are you doing? Shoot the metal heads now!!!"
+                      ]
 
 
 class App:
@@ -17,8 +24,6 @@ class App:
     root.iconbitmap("F:\Python_Projects\Personal Projects\Rock,Paper,Scissors\Rock-Paper-Scissors\controller.png")
     root.geometry("620x500")
 
-    
-    
 
     def rockButton_command():
         global computer_wins 
@@ -26,15 +31,19 @@ class App:
         player_choice = "rock"
         possible_actions = ['rock', 'paper', 'scissors']
         computer_action = random.choice(possible_actions)
+        win_player_message = random.choice(wins_player_list)
+        win_computer_message = random.choice(wins_computer_list)
         if computer_action == "rock":
             print('Tie!')         
         elif computer_action == "paper":
             computer_wins += 1
             result_label.config(text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}")
+            last_game_label.config(text = win_computer_message)
             print(f"Computer wins! {computer_wins}")
         elif computer_action == "scissors":
             player_wins +=1
             result_label.config(text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}")
+            last_game_label.config(text = win_player_message)
             print(f"Player wins! {player_wins}")         
         return App
     
@@ -77,10 +86,6 @@ class App:
         return App
     
     
-    
-
-    
-    
     exit_btn = PhotoImage(file = "F:\Python_Projects\Personal Projects\Rock,Paper,Scissors\Rock-Paper-Scissors\exit.png")
     exit_img_label = Label(image = exit_btn)
     exit_button = Button(root, image=exit_btn, command = sys.exit, borderwidth = 0)
@@ -110,10 +115,10 @@ class App:
     scissors_button = Button(root, image = scissors_btn, command = scissorsButton_command, borderwidth = 0)
     scissors_button.place(x = 420, y = 200)
 
+    global last_game_label
     last_game_label = Label(root,
                             font = ("Bahnschrift 13"),
-                            justify = CENTER,
-                            text = "LAST GAME MESSAGE",
+                            text = "Prepare for battle, soldier!",
                             padx = 0)
     last_game_label.place(x = 220, y = 380)
     
@@ -122,8 +127,8 @@ class App:
                          text = f"Player wins: {player_wins}\nComputer wins: {computer_wins}",  
                          font = ("Verdana 10 bold"), 
                          justify = LEFT, 
-                         padx = 20)
+                         padx = 0, pady = 0)
     result_label.pack()
-
+    result_label.place(x = 50, y = 450)
     
 mainloop()
