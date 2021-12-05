@@ -20,6 +20,7 @@ TO_DO:
 Main Changes Log:
 
 05/12/2021:
+
 -major GUI bugs fixed
 
 -points counter fixed
