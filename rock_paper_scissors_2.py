@@ -20,7 +20,7 @@ wins_computer_list = ["Try harder, soldier!",
 class App:
     root = Tk()
     root.title("Game of Rock, Paper, Scissors.")
-    root.iconbitmap(r"Rock-Paper-Scissors\images\controller.png")
+    # root.iconbitmap(filer"Rock-Paper-Scissors\images\controller.png")
     root.geometry("620x500")
 
 
