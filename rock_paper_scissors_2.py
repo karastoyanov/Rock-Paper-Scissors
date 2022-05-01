@@ -20,7 +20,7 @@ wins_computer_list = ["Try harder, soldier!",
 class App:
     root = Tk()
     root.title("Game of Rock, Paper, Scissors.")
-    # root.iconbitmap(file = r"Rock-Paper-Scissors\images\controller.png")
+    # root.iconbitmap(r"images\console.png")
     root.geometry("620x500")
 
 
@@ -131,7 +131,7 @@ class App:
     last_game_label.pack(expand = True)
     last_game_label.configure()
     # last_game_label.place(x = 220, y = 380, anchor = 'nw')
-    last_game_label.place(y = 380, anchor = 'nw')
+    last_game_label.place(x = 200, y = 360, anchor = 'sw')
     
     global result_label
     result_label = Label(root, 
