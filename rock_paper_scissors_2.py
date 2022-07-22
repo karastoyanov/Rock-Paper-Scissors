@@ -4,7 +4,6 @@ from tkinter import *
 import sys
 import random
 
-
 computer_wins = 0
 player_wins = 0
 
