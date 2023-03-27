@@ -23,15 +23,23 @@ class MainMenu(QMainWindow):
         self.central_text = QLabel(self)
         self.central_text.setText("A game of")
         self.central_text.setFont(QFont(families[0], 12))
-        self.central_text.setGeometry(250, 10, 200, 100)
+        self.central_text.setGeometry(240, 10, 200, 100)
         self.central_text_sec_line = QLabel(self)
         self.central_text_sec_line.setText("Rock-Paper-Scissors")
         self.central_text_sec_line.setFont(QFont(families[0], 24))
-        self.central_text_sec_line.setGeometry(60, 50, 600, 100)
+        self.central_text_sec_line.setGeometry(52, 50, 600, 100)
         self.central_text.show()
         self.central_text_sec_line.show()
 
+        # Player choice text
+        self.player_choice_text = QLabel(self)
+        self.player_choice_text.setText("Choose your weapon")
+        self.player_choice_text.setFont(QFont(families[0], 8))
+        self.player_choice_text.setGeometry(215, 140, 170, 10)
+        self.player_choice_text.show()
 
+        # Icons
+        
 
 
 
