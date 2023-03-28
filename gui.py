@@ -6,7 +6,7 @@ from PyQt5.QtCore import (QSize, Qt)
 import sys
 
 
-class MainMenu(QMainWindow):
+class Game(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("A Game of Rock-Paper-Scissors")
@@ -66,12 +66,19 @@ class MainMenu(QMainWindow):
         self.scissors_button.setGeometry(390, 170, 120, 50)
         self.scissors_button.show()
 
-
+        # Exit Button
+        self.exit_button = QPushButton(self)
+        self.exit_button.setIcon(QIcon(r'images/exit.png'))
+        self.exit_button.setIconSize(QSize(20, 20))
+        self.exit_button.setText("Exit")
+        self.exit_button.setFont(QFont(families[0], 8))
+        self.exit_button.setGeometry(520, 10, 60, 20)
+        self.exit_button.show()
 
 
 
 if __name__ == "__main__":            
     app = QApplication(sys.argv)
-    win = MainMenu()
+    win = Game()
     win.show()
     app.exec_()
