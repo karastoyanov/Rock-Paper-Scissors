@@ -11,7 +11,7 @@ class MainMenu(QMainWindow):
         super().__init__()
         self.setWindowTitle("A Game of Rock-Paper-Scissors")
         self.setWindowIcon(QIcon(r'images/console.png'))
-        self.setFixedSize(600, 300)
+        self.setFixedSize(600, 350)
         self.show
         
         font = QFontDatabase.addApplicationFont(r'fonts/ElementalEnd.ttf')
@@ -38,9 +38,33 @@ class MainMenu(QMainWindow):
         self.player_choice_text.setGeometry(215, 140, 170, 10)
         self.player_choice_text.show()
 
-        # Icons
-        
+        # Player Buttons
+        # Rock Button
+        self.rock_button = QPushButton(self)
+        self.rock_button.setIcon(QIcon(r'images/stone.png'))
+        self.rock_button.setIconSize(QSize(30, 30))
+        self.rock_button.setText("Rock")
+        self.rock_button.setFont(QFont(families[0], 8))
+        self.rock_button.setGeometry(90, 170, 120, 50)
+        self.rock_button.show()
 
+        # Paper Button
+        self.paper_button = QPushButton(self)
+        self.paper_button.setIcon(QIcon(r'images/file.png'))
+        self.paper_button.setIconSize(QSize(30, 30))
+        self.paper_button.setText("Paper")
+        self.paper_button.setFont(QFont(families[0], 8))
+        self.paper_button.setGeometry(240, 170, 120, 50)
+        self.paper_button.show()
+
+        # Scissor Button
+        self.scissors_button = QPushButton(self)
+        self.scissors_button.setIcon(QIcon(r'images/scissors.png'))
+        self.scissors_button.setIconSize(QSize(30, 30))
+        self.scissors_button.setText("Scissors")
+        self.scissors_button.setFont(QFont(families[0], 8))
+        self.scissors_button.setGeometry(390, 170, 120, 50)
+        self.scissors_button.show()
 
 
 
