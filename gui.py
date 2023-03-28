@@ -74,7 +74,19 @@ class Game(QMainWindow):
         self.exit_button.setFont(QFont(families[0], 8))
         self.exit_button.setGeometry(520, 10, 60, 20)
         self.exit_button.show()
+        
+        # Result Stats
+        self.player_result = QLabel(self)
+        self.player_result.setText("Player: ")
+        self.player_result.setFont(QFont(families[0], 8))
+        self.player_result.setGeometry(480, 300, 80, 20)
+        self.player_result.show()
 
+        self.ai_result = QLabel(self)
+        self.ai_result.setText("AI: ")
+        self.ai_result.setFont(QFont(families[0], 8))
+        self.ai_result.setGeometry(480, 320, 80, 20)
+        self.ai_result.show()
 
 
 if __name__ == "__main__":            
