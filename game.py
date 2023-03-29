@@ -30,4 +30,3 @@ def game_round(player_choice):
             print("Tie!")
         
 
-print(game_round("rock"))
