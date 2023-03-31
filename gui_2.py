@@ -10,7 +10,9 @@ class MainMenu(QWidget):
         super().__init__()
         self.setWindowTitle("A game of Rock-Paper-Scissors")
         self.setWindowIcon(QIcon(r'images/console.png'))
-        self.setGeometry(300, 300, 650, 400)
+        self.setGeometry(650, 300, 650, 400)
+        self.setMaximumWidth(650)
+        self.setMaximumHeight(400)
         self.initUI()
     
 
@@ -20,12 +22,11 @@ class MainMenu(QWidget):
         families = QFontDatabase.applicationFontFamilies(font)
         
 
-
+        #-----------------------------------------
         # Central Text
         top_text = QVBoxLayout()
         top_text.addStretch()
-        #top_text.addSpacing(10)
-
+        top_text.addSpacing(10)
 
         central_text = QLabel(self)
         central_text.setText("A game of")
@@ -44,8 +45,9 @@ class MainMenu(QWidget):
         top_text.addWidget(weapon_text)
         #top_text.addStretch(0)
         top_text.addSpacing(15)
+        #-----------------------------------------
 
-        
+        #-----------------------------------------
         # Player Buttons
         virt_player_buttons = QVBoxLayout()
         player_buttons = QHBoxLayout()
@@ -77,7 +79,7 @@ class MainMenu(QWidget):
         player_buttons.addSpacing(5)
         player_buttons.addStretch()
         virt_player_buttons.addStretch()
-        
+        #-----------------------------------------
  
 
 
@@ -89,9 +91,6 @@ class MainMenu(QWidget):
         main_layout.addStretch()
 
         self.setLayout(main_layout)
-        
-
-        self.setGeometry(500, 200, 400, 200)
         self.show()
 
 
