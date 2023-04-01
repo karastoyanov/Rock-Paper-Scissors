@@ -7,7 +7,7 @@ def game_round(player_choice):
     ai_choice = random.choice(possible_ai_choice)
     player_wins = False
     ai_wins = False
-    result = []
+    result = ""
 
     if player_choice == "rock":
         if ai_choice == "rock":
@@ -51,7 +51,12 @@ def game_round(player_choice):
             player_wins, ai_wins = False, False
             game_message.return_message(player_wins, ai_wins)
     
-    return str(result)
+    if player_wins == True and ai_wins == False:
+        return 1
+    elif player_wins == False and ai_wins == True:
+        return 2
+    elif player_wins == False and ai_wins == False:
+        return 3
 
 
 
