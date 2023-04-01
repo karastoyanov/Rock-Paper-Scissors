@@ -76,11 +76,23 @@ class MainMenu(QWidget):
         player_buttons.addWidget(rock_button)
         player_buttons.addWidget(paper_button)
         player_buttons.addWidget(scissors_button)
-        player_buttons.addSpacing(5)
+        player_buttons.addSpacing(0)
         player_buttons.addStretch()
         virt_player_buttons.addStretch()
         #-----------------------------------------
- 
+         
+        #-----------------------------------------
+        # Current Round Message
+        round_message = QVBoxLayout()
+        round_message.addSpacing(20)
+
+        round_message_label = QLabel(self)
+        round_message_label.setText("[]")
+        round_message_label.setFont(QFont(families[0], 12))
+        round_message_label.setAlignment(Qt.AlignCenter)
+        round_message.addWidget(round_message_label)
+        #-----------------------------------------
+
 
 
 
@@ -88,6 +100,7 @@ class MainMenu(QWidget):
         main_layout = QVBoxLayout()
         main_layout.addLayout(top_text)
         main_layout.addLayout(player_buttons)
+        main_layout.addLayout(round_message)
         main_layout.addStretch()
 
         self.setLayout(main_layout)
