@@ -91,7 +91,7 @@ class MainMenu(QWidget):
         round_message.addSpacing(20)
 
         round_message_label = QLabel(self)
-        round_message_label.setText(f'[]')
+        round_message_label.setText(f"[{game_message.return_message}]")
         round_message_label.setFont(QFont(families[0], 12))
         round_message_label.setAlignment(Qt.AlignCenter)
         round_message.addWidget(round_message_label)
