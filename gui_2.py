@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QLineEd
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
+import game
 
 class MainMenu(QWidget):
     def __init__(self):
@@ -93,6 +94,21 @@ class MainMenu(QWidget):
         round_message.addWidget(round_message_label)
         #-----------------------------------------
 
+        #-----------------------------------------
+        # Result Counter
+        result_counter = QVBoxLayout()
+        result_counter.addSpacing(50)
+
+        result_counter_player = QLabel(self)
+        result_counter_player.setText("PLAYER: ")
+        result_counter_player.setFont(QFont(families[0], 10))
+        result_counter_player.setAlignment(Qt.AlignCenter)
+        result_counter_ai = QLabel(self)
+        result_counter_ai.setText("AI: ")
+        result_counter_ai.setFont(QFont(families[0], 10))
+        result_counter_ai.setAlignment(Qt.AlignCenter)
+        result_counter.addWidget(result_counter_player)
+        result_counter.addWidget(result_counter_ai)
 
 
 
@@ -101,6 +117,7 @@ class MainMenu(QWidget):
         main_layout.addLayout(top_text)
         main_layout.addLayout(player_buttons)
         main_layout.addLayout(round_message)
+        main_layout.addLayout(result_counter)
         main_layout.addStretch()
 
         self.setLayout(main_layout)
