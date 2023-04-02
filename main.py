@@ -3,7 +3,7 @@
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QPlainTextEdit, QHBoxLayout, QVBoxLayout, QMainWindow, QFormLayout, QGroupBox, QGridLayout)
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sys
+import sys, random
 
 class MainMenu(QWidget):
     def __init__(self):
@@ -58,7 +58,7 @@ class MainMenu(QWidget):
 
         # Rock Button
         rock_button = QPushButton(self)
-        #rock_button.clicked.connect()
+        rock_button.clicked.connect(lambda : MainMenu.game_round("rock"))
         rock_button.setIcon(QIcon(r'images/stone.png'))
         rock_button.setIconSize(QSize(30, 30))
         rock_button.setText("Rock")
@@ -100,7 +100,6 @@ class MainMenu(QWidget):
         # Result Counter
         result_counter = QVBoxLayout()
         result_counter.addSpacing(50)
-
         result_counter_player = QLabel(self)
         result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}') 
         result_counter_player.setFont(QFont(families[0], 10))
@@ -136,31 +135,39 @@ class MainMenu(QWidget):
             elif ai_choice == "paper":
                 print("Computer wins!")
                 player_wins, ai_wins = False, True
+                MainMenu.AI_POINTS += 1
+                print(MainMenu.AI_POINTS)
             elif ai_choice == "scissors":
                 print("Player wins!")
                 player_wins, ai_wins = True, False
+                MainMenu.PLAYER_POINTS += 1
 
         if player_choice == "paper":
             if ai_choice == "rock":
                 print("Player wins!")
                 player_wins, ai_wins = True, False
+                MainMenu.PLAYER_POINTS += 1
             elif ai_choice == "paper":
                 print("Tie!")
                 player_wins, ai_wins = False, False
             elif ai_choice == "scissors":
                 print("Computer wins!")
                 player_wins, ai_wins = False, True
+                MainMenu.AI_POINTS += 1
 
         if player_choice == "scissors":
             if ai_choice == "rock":
                 print("Computer wins!")
                 player_wins, ai_wins = False, True
+                MainMenu.AI_POINTS += 1
             elif ai_choice == "paper":
                 print("Player wins!")
                 player_wins, ai_wins = True, False
+                MainMenu.PLAYER_POINTS += 1
             elif ai_choice == "scissors":
                 print("Tie!")
                 player_wins, ai_wins = False, False
+        QApplication.processEvents()
     
         if player_wins == True and ai_wins == False:
             return 1
