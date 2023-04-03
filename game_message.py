@@ -2,7 +2,6 @@
 import random
 import game
 
-
 player_wins_messages = [
         "Good job, soldier!",
         "Keep the good work, private!",
@@ -17,7 +16,6 @@ ai_wins_messages = [
 tie_messages = [
         "You get another chance, private!"
         ]
-
 
 def return_message(player_result, ai_result):
     if player_result == True and ai_result == False:

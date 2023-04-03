@@ -4,9 +4,14 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QLineEd
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys, random
-import game
 
 class MainMenu(QWidget):
+    
+    # Global variables for keeping the score and displaying a message at the end of each round
+    PLAYER_POINTS = 0 
+    AI_POINTS = 0
+    ROUND_RESULT = ''
+    
     def __init__(self):
         super().__init__()
         self.setWindowTitle("A game of Rock-Paper-Scissors")
@@ -15,19 +20,13 @@ class MainMenu(QWidget):
         self.setMaximumWidth(650)
         self.setMaximumHeight(400)
         self.initUI()
-    
-    PLAYER_POINTS = 0 
-    AI_POINTS = 0
-    ROUND_RESULT = ''
-    
 
+    # Initialize the User Interface
     def initUI(self):
         font = QFontDatabase.addApplicationFont(r'fonts/ElementalEnd.ttf')
         if font < 0: print("Error in fonts.")
         families = QFontDatabase.applicationFontFamilies(font)
         
-
-        #-----------------------------------------
         # Central Text
         top_text = QVBoxLayout()
         top_text.addStretch()
@@ -47,12 +46,9 @@ class MainMenu(QWidget):
         top_text.addWidget(central_text)
         top_text.addWidget(central_text_sec_line)
         top_text.addWidget(weapon_text)
-        #top_text.addStretch(0)
         top_text.addSpacing(15)
-        #-----------------------------------------
 
-        #-----------------------------------------
-        # Player Buttons
+        # Player Buttons Layout Initialization
         virt_player_buttons = QVBoxLayout()
         player_buttons = QHBoxLayout()
         player_buttons.addStretch()
@@ -90,28 +86,24 @@ class MainMenu(QWidget):
         scissors_button.setIconSize(QSize(30, 30))
         scissors_button.setText("Scissors")
         scissors_button.setFont(QFont(families[0], 8))
-
+        
+        # Add buttons to widget
         player_buttons.addWidget(rock_button)
         player_buttons.addWidget(paper_button)
         player_buttons.addWidget(scissors_button)
         player_buttons.addSpacing(0)
         player_buttons.addStretch()
         virt_player_buttons.addStretch()
-        #-----------------------------------------
-         
-        #-----------------------------------------
+
         # Current Round Message
         round_message = QVBoxLayout()
         round_message.addSpacing(20)
-
         round_message_label = QLabel(self)
         round_message_label.setText(f'[]')
         round_message_label.setFont(QFont(families[0], 12))
         round_message_label.setAlignment(Qt.AlignCenter)
         round_message.addWidget(round_message_label)
-        #-----------------------------------------
 
-        #-----------------------------------------
         # Result Counter
         result_counter = QVBoxLayout()
         result_counter.addSpacing(50)
@@ -136,7 +128,7 @@ class MainMenu(QWidget):
         self.setLayout(main_layout)
         self.show()
 
-
+    # Main Game Funcionality and Message Handling
     def game_round(player_choice):
         possible_ai_choice = ["rock", "paper", "scissors"]
         ai_choice = random.choice(possible_ai_choice)

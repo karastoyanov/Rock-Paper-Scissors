@@ -23,8 +23,6 @@ def game_round(player_choice):
                 player_wins, ai_wins = True, False
                 # main.MainMenu.PLAYER_POINTS += 1
 
-                
-
         if player_choice == "paper":
             if ai_choice == "rock":
                 print("Player wins!")
