@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QLineEd
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys, random
+import game
 
 class MainMenu(QWidget):
     def __init__(self):
@@ -65,18 +66,22 @@ class MainMenu(QWidget):
         rock_button.setIconSize(QSize(30, 30))
         rock_button.setText("Rock")
         rock_button.setFont(QFont(families[0], 8))
+        
         # Paper Button
         paper_button = QPushButton(self)
-        rock_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
-        rock_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
+        paper_button.clicked.connect(lambda : MainMenu.game_round("paper"))
+        paper_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
+        paper_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
         paper_button.setIcon(QIcon(r'images/file.png'))
         paper_button.setIconSize(QSize(30, 30))
         paper_button.setText("Paper")
         paper_button.setFont(QFont(families[0], 8))
+        
         # Scissor Button
         scissors_button = QPushButton(self)
-        rock_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
-        rock_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
+        scissors_button.clicked.connect(lambda : MainMenu.game_round("scissors"))
+        scissors_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
+        scissors_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
         scissors_button.setIcon(QIcon(r'images/scissors.png'))
         scissors_button.setIconSize(QSize(30, 30))
         scissors_button.setText("Scissors")
@@ -143,12 +148,10 @@ class MainMenu(QWidget):
                 print("Computer wins!")
                 player_wins, ai_wins = False, True
                 MainMenu.AI_POINTS += 1
-                print(MainMenu.AI_POINTS)
             elif ai_choice == "scissors":
                 print("Player wins!")
                 player_wins, ai_wins = True, False
                 MainMenu.PLAYER_POINTS += 1
-                
 
         if player_choice == "paper":
             if ai_choice == "rock":
@@ -175,7 +178,7 @@ class MainMenu(QWidget):
             elif ai_choice == "scissors":
                 print("Tie!")
                 player_wins, ai_wins = False, False
-        QApplication.processEvents()
+        # QApplication.processEvents()
     
         if player_wins == True and ai_wins == False:
             return 1
