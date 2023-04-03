@@ -59,18 +59,24 @@ class MainMenu(QWidget):
         # Rock Button
         rock_button = QPushButton(self)
         rock_button.clicked.connect(lambda : MainMenu.game_round("rock"))
+        rock_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
+        rock_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
         rock_button.setIcon(QIcon(r'images/stone.png'))
         rock_button.setIconSize(QSize(30, 30))
         rock_button.setText("Rock")
         rock_button.setFont(QFont(families[0], 8))
         # Paper Button
         paper_button = QPushButton(self)
+        rock_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
+        rock_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
         paper_button.setIcon(QIcon(r'images/file.png'))
         paper_button.setIconSize(QSize(30, 30))
         paper_button.setText("Paper")
         paper_button.setFont(QFont(families[0], 8))
         # Scissor Button
         scissors_button = QPushButton(self)
+        rock_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
+        rock_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
         scissors_button.setIcon(QIcon(r'images/scissors.png'))
         scissors_button.setIconSize(QSize(30, 30))
         scissors_button.setText("Scissors")
@@ -121,6 +127,7 @@ class MainMenu(QWidget):
         self.setLayout(main_layout)
         self.show()
 
+
     def game_round(player_choice):
         possible_ai_choice = ["rock", "paper", "scissors"]
         ai_choice = random.choice(possible_ai_choice)
@@ -141,6 +148,7 @@ class MainMenu(QWidget):
                 print("Player wins!")
                 player_wins, ai_wins = True, False
                 MainMenu.PLAYER_POINTS += 1
+                
 
         if player_choice == "paper":
             if ai_choice == "rock":
