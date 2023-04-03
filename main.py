@@ -18,6 +18,7 @@ class MainMenu(QWidget):
     
     PLAYER_POINTS = 0 
     AI_POINTS = 0
+    ROUND_RESULT = ''
     
 
     def initUI(self):
@@ -62,6 +63,7 @@ class MainMenu(QWidget):
         rock_button.clicked.connect(lambda : MainMenu.game_round("rock"))
         rock_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
         rock_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
+        rock_button.clicked.connect(lambda : round_message_label.setText(f'[{MainMenu.ROUND_RESULT}]'))
         rock_button.setIcon(QIcon(r'images/stone.png'))
         rock_button.setIconSize(QSize(30, 30))
         rock_button.setText("Rock")
@@ -72,6 +74,7 @@ class MainMenu(QWidget):
         paper_button.clicked.connect(lambda : MainMenu.game_round("paper"))
         paper_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
         paper_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
+        paper_button.clicked.connect(lambda : round_message_label.setText(f'[{MainMenu.ROUND_RESULT}]'))
         paper_button.setIcon(QIcon(r'images/file.png'))
         paper_button.setIconSize(QSize(30, 30))
         paper_button.setText("Paper")
@@ -82,6 +85,7 @@ class MainMenu(QWidget):
         scissors_button.clicked.connect(lambda : MainMenu.game_round("scissors"))
         scissors_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER: {MainMenu.PLAYER_POINTS}'))
         scissors_button.clicked.connect(lambda : result_counter_ai.setText(f'AI: {MainMenu.AI_POINTS}'))
+        scissors_button.clicked.connect(lambda : round_message_label.setText(f'[{MainMenu.ROUND_RESULT}]'))
         scissors_button.setIcon(QIcon(r'images/scissors.png'))
         scissors_button.setIconSize(QSize(30, 30))
         scissors_button.setText("Scissors")
@@ -138,7 +142,6 @@ class MainMenu(QWidget):
         ai_choice = random.choice(possible_ai_choice)
         player_wins = False
         ai_wins = False
-        result = ""
 
         if player_choice == "rock":
             if ai_choice == "rock":
@@ -178,46 +181,29 @@ class MainMenu(QWidget):
             elif ai_choice == "scissors":
                 print("Tie!")
                 player_wins, ai_wins = False, False
-        # QApplication.processEvents()
+        
+        player_wins_messages = [
+            "Good job, soldier!",
+            "Keep the good work, private!",
+            "Keep fraging soldier!"
+            ]
+        ai_wins_messages = [
+            "Better luck next time!",
+            "Common soldier, the fate of the humanity is in your hands!"
+        ]
+        tie_messages = [
+            "It's a Tie! You get another chance, private!"
+        ]
+        
+        round_result = ''
     
         if player_wins == True and ai_wins == False:
-            return 1
-        elif player_wins == False and ai_wins == True:
-            return 2
-        elif player_wins == False and ai_wins == False:
-            return 3
-
-
-    def round_message(result):
-        player_wins_messages = [
-        "Good job, soldier!",
-        "Keep the good work, private!",
-        "Keep fraging soldier!"
-        ]
-
-        ai_wins_messages = [
-        "Better luck next time!",
-        "Common soldier, the fate of the humanity is in your hands!"
-        ]
-
-        tie_messages = [
-        "You get another chance, private!"
-        ]
-        round_result = ''
-
-        if result == 1:
             round_result = random.choice(player_wins_messages)
-            print(round_result)
-        elif result == 2:
+        elif player_wins == False and ai_wins == True:
             round_result = random.choice(ai_wins_messages)
-            print(round_result)
-        elif result == 3:
+        elif player_wins == False and ai_wins == False:
             round_result = random.choice(tie_messages)
-            print(round_result)
-        return round_result
-
-
-    
+        MainMenu.ROUND_RESULT = round_result
 
 
 app = QApplication(sys.argv)
