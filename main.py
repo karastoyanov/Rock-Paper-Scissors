@@ -24,7 +24,7 @@ class MainMenu(QWidget):
 
     # Initialize the User Interface
     def initUI(self):
-        font = QFontDatabase.addApplicationFont(r'fonts/spaceranger.ttf')
+        font = QFontDatabase.addApplicationFont(r'fonts/ElementalEnd.ttf')
         if font < 0: print("Error in fonts.")
         families = QFontDatabase.applicationFontFamilies(font)
         
@@ -35,7 +35,7 @@ class MainMenu(QWidget):
         
         central_text = QLabel(self)
         central_text.setText("A game of")
-        central_text.setFont(QFont(families[0], 14))
+        central_text.setFont(QFont(families[0], 12))
         central_text.setAlignment(Qt.AlignCenter)
         central_text_sec_line = QLabel(self)
         central_text_sec_line.setText("Rock-Paper-Scissors")
@@ -44,7 +44,7 @@ class MainMenu(QWidget):
         
         weapon_text = QLabel(self)
         weapon_text.setText("Choose Your Weapon")
-        weapon_text.setFont(QFont(families[0], 14))
+        weapon_text.setFont(QFont(families[0], 12))
         weapon_text.setAlignment(Qt.AlignCenter)
         
         top_text.addWidget(central_text)
@@ -113,7 +113,7 @@ class MainMenu(QWidget):
         round_message.addSpacing(20)
         round_message_label = QLabel(self)
         round_message_label.setText(f'[]')
-        round_message_label.setFont(QFont(families[0], 14))
+        round_message_label.setFont(QFont(families[0], 10))
         round_message_label.setAlignment(Qt.AlignCenter)
         round_message.addWidget(round_message_label)
         
@@ -122,7 +122,7 @@ class MainMenu(QWidget):
         round_result.addSpacing(10)
         round_result_text = QLabel(self)
         round_result_text.setText(MainMenu.ROUND_RESULT)
-        round_result_text.setFont(QFont(families[0], 12))
+        round_result_text.setFont(QFont(families[0], 10))
         round_result_text.setAlignment(Qt.AlignCenter)
         round_result.addWidget(round_result_text)
         
@@ -134,11 +134,11 @@ class MainMenu(QWidget):
         result_counter.addSpacing(50)
         result_counter_player = QLabel(self)
         result_counter_player.setText(f'PLAYER POINTS: {MainMenu.PLAYER_POINTS}') 
-        result_counter_player.setFont(QFont(families[0], 12))
+        result_counter_player.setFont(QFont(families[0], 10))
         result_counter_player.setAlignment(Qt.AlignCenter)
         result_counter_ai = QLabel(self)
         result_counter_ai.setText(f'AI POINTS: {MainMenu.AI_POINTS}')
-        result_counter_ai.setFont(QFont(families[0], 12))
+        result_counter_ai.setFont(QFont(families[0], 10))
         result_counter_ai.setAlignment(Qt.AlignCenter)
         result_counter.addWidget(result_counter_player)
         result_counter.addWidget(result_counter_ai)
