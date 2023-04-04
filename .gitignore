@@ -1,5 +1,8 @@
+# Ignore Obsidian config file
 .obsidian
 
+# Ignore Visual Studio file
 .vscode
 
-__pychache__
+# Ignore python cache folder
+/__pychache__
