@@ -5,4 +5,4 @@
 .vscode
 
 # Ignore python cache folder
-/__pycache__
+__pycache__/
