@@ -1,49 +1,20 @@
-# Rock-Paper-Scissors
-A game of rock, paper, scissors
+## A game of Rock-Paper-Scissors :rock: :page_with_curl: :scissors:
+
+####  Simple game of rock-paper-scissors with graphical user interface. Lead the humanity against the AI in a deadly game for our race survival. The rules are simple, get into the role of a private soldier, part of the last surviving humans and defent us against the machines who took over the world. 
+####  Each round you will have to choose your weapon - a rock, a paper or a pair of scissors and fight against the artificial intelligence who is trying to purge the humanity from the face of the planet. 
+
+### :hammer_and_wrench: Game mechanics:
+
+#### The player can choose one the three buttons - rock, paper or scissors and play versus the computer, who randomly selects his choice. Based on the result, each round can give you a point or a point for the AI. In case of Tie, no points are added to none of the players.
+#### Also, after each round, depending on the results, a text message will be generated and will appear on the screen. 
+#### On the bottom of the screen the player can track the overall results. At this point there is no limit and the game can continue indefinitely.
+
+### :desktop_computer: Technologies used:
+
+#### The application is written in Python. The entire GUI is written in QT Framework v5 using the respective python libraries `pyqt5` and `pyqt5-tools`.
+
+#### The project is still under development and more features will be implemeted in next release.
+#### Contributing in the improvement and development of the application is more than welcome. Any feedbacks and suggestions would be valuable. 
+#### Giving the project a star would be an additional support.
 
 
-https://pypi.org/
-
-Game Description and Instructions:
-"### TO DO ###"
-
-GUI created with https://visualtk.com/
-
-TO_DO:
-
--new GUI objects
-
--GUI tweeks(fonts, placement, background)
-
--.pack() and place() to be fixed for all GUI objects
-
--last game result message to be finished
-
-
-Main Changes Log:
-
-05/12/2021:
-
--major GUI bugs fixed
-
--points counter fixed
-
--last game result message added(to be fixed with a .txt files instead of lists)
-
-
-
-03/12/2021:
-
--new GUI created(rock_paper_scissors_v2)
-
--temporary graphical objects added
-
--added points counter for the result(works only in terminal, Label not updating)
-
-
-
-02/12/2021:
-
--GUI created and set for UI objects;
-
--RPS main mechanics created;
