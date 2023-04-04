@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7f684117ac0a653d",
+            "id": "c16acdce50eaa7bb",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -146,6 +146,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7f684117ac0a653d",
-  "lastOpenFiles": []
+  "active": "c16acdce50eaa7bb",
+  "lastOpenFiles": [
+    "fonts/License.txt",
+    "fonts/Licence.txt",
+    "fonts/spaceranger.ttf",
+    "fonts/FROSTBITE-Wide.ttf",
+    "fonts/FROSTBITE-Wide Bold.ttf",
+    "fonts/FROSTBITE-Narrow.ttf",
+    "fonts/FROSTBITE-Narrow Bold.ttf",
+    "fonts/Robot_Font.otf",
+    "fonts/Astronomus.ttf"
+  ]
 }
