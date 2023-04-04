@@ -1,0 +1,11 @@
+# Ignore Obsidian config file
+.obsidian
+
+# Ignore Visual Studio file
+.vscode
+
+# Ignore python cache folder
+__pycache__/
+
+# Ignore alpha version folder
+v0.1_alpha/
