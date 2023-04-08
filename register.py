@@ -15,6 +15,8 @@ class RegisterMenu(QWidget):
         self.setMaximumWidth(800)
         self.setMaximumHeight(400)
         self.initUI()
+    
+
 
     def initUI(self):
         # Fonts setting
@@ -46,7 +48,7 @@ class RegisterMenu(QWidget):
         user_name_text_field.setFont(QFont(families[0], 10))
         user_name_text_field.setAlignment(Qt.AlignCenter)
         user_name_text_field.setFixedWidth(300)
-
+        
         password_label = QLabel(self)
         password_label.setText("Password")
         password_label.setFont(QFont(families[0], 12))
@@ -78,6 +80,7 @@ class RegisterMenu(QWidget):
 
         # Register Button
         register_button = QPushButton(self)
+        register_button.clicked.connect(lambda : servicenow_register_user())
         register_button.setIcon(QIcon(r'images/register.png'))
         register_button.setIconSize(QSize(30, 30))
         register_button.setText("Create Account")
@@ -112,6 +115,30 @@ class RegisterMenu(QWidget):
         main_layout.addLayout(buttons_layout)
         self.setLayout(main_layout)
         self.show()
+
+        def servicenow_register_user():
+            # Create New User in Rock-Paper-Scissors Table
+            client = pysnc.ServiceNowClient('dev109438', ('admin', 'LrmsjVJB@8^3'))
+            gr = client.GlideRecord('u_rock_paper_scissors_users')
+            gr.initialize()
+            gr.u_user_name = user_name_text_field.text()
+            gr.u_user_email = email_address_text_field.text()
+            gr.insert()
+
+            # Create New User in sys_user table
+            gr = client.GlideRecord('sys_user')
+            gr.initialize()
+            gr.user_name = user_name_text_field.text()
+            gr.name = user_name_text_field.text()
+            gr.email = email_address_text_field.text()
+            gr.insert()
+
+
+
+
+
+
+
 
 app = QApplication(sys.argv)
 window = RegisterMenu()
