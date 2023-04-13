@@ -86,13 +86,6 @@ class LoginMenu(QWidget):
         buttons_layout.addSpacing(2)
         buttons_vert_layout.addStretch()
 
-
-
-
-
-
-
-
         # Main Layout
         main_layout = QVBoxLayout()
         main_layout.addLayout(login_layout)
