@@ -1,8 +1,17 @@
 #!/usr/bin/python3
 
-from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QPlainTextEdit, QHBoxLayout, QVBoxLayout, QMainWindow, QFormLayout, QGroupBox, QGridLayout)
+from PyQt5.QtWidgets import (QApplication, 
+                             QWidget, 
+                             QPushButton, 
+                             QLabel, 
+                             QLineEdit, 
+                             QMessageBox, 
+                             QPlainTextEdit, 
+                             QHBoxLayout, 
+                             QVBoxLayout) 
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import db_connect
 import random, sys, re
 
 class RegisterMenu(QWidget):
@@ -130,7 +139,8 @@ class RegisterMenu(QWidget):
                 print("Email does not match")
             
             # Check if user name is valid and unique
-            # TO DO
+            query = f"SELECT * FROM users WHERE user_name = {user_name_text_field.text()}"
+
 
 
             # Check if password is valid
