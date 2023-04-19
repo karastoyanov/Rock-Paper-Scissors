@@ -9,3 +9,6 @@ __pycache__/
 
 # Ignore alpha version folder
 v0.1_alpha/
+
+# Ignore DB Credentials
+database_credentials.txt

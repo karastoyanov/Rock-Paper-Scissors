@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QLineEd
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import random, sys, re
-import pysnc
 
 class RegisterMenu(QWidget):
     def __init__(self):
@@ -116,8 +115,7 @@ class RegisterMenu(QWidget):
         self.setLayout(main_layout)
         self.show()
 
-        def servicenow_register_user():
-            client = pysnc.ServiceNowClient('dev109438', ('admin', 'LrmsjVJB@8^3'))
+        def postgres_register_user():
             
             email_address_valid = False
             user_name_valid = True
@@ -131,23 +129,11 @@ class RegisterMenu(QWidget):
             else:
                 print("Email does not match")
             
-            # Check if user name is valid (unique)
-            gr_custom_table = client.GlideRecord('u_rock_paper_scissors_users')
-            gr_custom_table.query()
-            gr_custom_table.next()
-            for custom_user in gr_custom_table:
-                if custom_user.get_display_value('u_user_name') == user_name_text_field:
-                    user_name_valid = False
-                    break
-            # gr_sys_table = client.GlideRecord('sys_user')
-            # gr_sys_table.query()
-            # gr_sys_table.next()
-            # for sys_user in gr_sys_table:
-            #     if sys_user.get_display_value('user_name') == user_name_text_field:
-            #         user_name_valid = False
-            #         break
-            
-            # Check if user password is valid
+            # Check if user name is valid and unique
+            # TO DO
+
+
+            # Check if password is valid
             password_pattern = r'!@#$%^&*()-+?_=,<>/'
             password_errors = []
             if password_text_field.text() != password_text_field_rep.text():
@@ -164,34 +150,6 @@ class RegisterMenu(QWidget):
                 password_errors.append("Password must contain at least one uppercase letter.")
             if not re.match("[0-9]", password_text_field.text()):
                 password_valid = False
-                password_errors.append("Password must contain at least one number.")
-                    
-                
-                    
-            
-            
-            
-            
-            # # Create New User in Rock-Paper-Scissors Table
-            # gr = client.GlideRecord('u_rock_paper_scissors_users')
-            # gr.initialize()
-            # gr.u_user_name = user_name_text_field.text()
-            # gr.u_user_email = email_address_text_field.text()
-            # gr.insert()
-
-            # # Create New User in sys_user table
-            # gr = client.GlideRecord('sys_user')
-            # gr.initialize()
-            # gr.user_name = user_name_text_field.text()
-            # gr.name = user_name_text_field.text()
-            # gr.email = email_address_text_field.text()
-            # gr.insert()
-
-
-
-
-
-
 
 
 app = QApplication(sys.argv)
