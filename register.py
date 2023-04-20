@@ -23,8 +23,6 @@ class RegisterMenu(QWidget):
         self.setMaximumWidth(800)
         self.setMaximumHeight(400)
         self.initUI()
-    
-
 
     def initUI(self):
         # Fonts setting
@@ -79,7 +77,6 @@ class RegisterMenu(QWidget):
         password_text_field_rep.setFixedWidth(300)
         password_text_field_rep.setAlignment(Qt.AlignCenter)
 
-
         # Buttons Layout
         buttons_vert_layout = QVBoxLayout()
         buttons_layout = QHBoxLayout()
@@ -94,14 +91,12 @@ class RegisterMenu(QWidget):
         register_button.setText("Create Account")
         register_button.setFont(QFont(families[0], 10))
         register_button.setFixedWidth(300)
-        
 
         buttons_layout.addWidget(register_button)
         buttons_layout.setAlignment(Qt.AlignCenter)
         buttons_layout.addStretch()
         buttons_layout.addSpacing(10)
         buttons_vert_layout.addStretch()
-
 
         register_layout.addWidget(email_address_label)
         register_layout.addWidget(email_address_text_field)
@@ -113,9 +108,6 @@ class RegisterMenu(QWidget):
         register_layout.addWidget(password_text_field_rep)
         register_layout.setAlignment(Qt.AlignCenter)
         register_layout.addSpacing(10)
-
-
-
 
         # Main Layout
         main_layout = QVBoxLayout()
@@ -149,28 +141,21 @@ class RegisterMenu(QWidget):
             # Check if user email is valid and unique
             email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
             if re.match(email_pattern, email_address_text_field.text()):
-                print("Email Matches")
                 db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE email_address = '{email_address_text_field.text()}'")
                 result = db_connect.POSTGRES_CURSOR.fetchone()
-                print(f"\nEmail result is {result}\n")
                 if result != None:
                     create_account_errors.append(f"Account with email address {email_address_text_field.text()} already exists.")
-                    print(f"Account with email address {email_address_text_field.text()} already exists.")
                 else:
                     email_address_valid = True
             else:
                 create_account_errors.append("Email address is not valid.")
-                print("Email does not match")
             
             # Check if user name is valid and unique
             db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE user_name = '{user_name_text_field.text()}'")
             result = db_connect.POSTGRES_CURSOR.fetchone()
             if result != None:
                 create_account_errors.append(f"Username {user_name_text_field.text()} already exists.")
-                print(f"Username {user_name_text_field.text()} already exists.")
                 user_name_valid = False
-
-
 
             # Check if password is valid
             #password_pattern = re.compile('!@#$%^&*()-+?_=,<>/')
@@ -179,7 +164,7 @@ class RegisterMenu(QWidget):
                 create_account_errors.append('Password fields does not match.')
             if len(password_text_field.text()) < 8:
                 password_valid = False
-                create_acount_errors.append('Password is too short. It must be at least 8 characters.')
+                create_account_errors.append('Password is too short. It must be at least 8 characters.')
             if not re.search(re.compile('[!@#$%^&*()-+?_=,<>/]'), password_text_field.text()):
                 password_valid = False
                 create_account_errors.append("Password must contain at least one special character.")
@@ -190,20 +175,23 @@ class RegisterMenu(QWidget):
                 password_valid = False
                 create_account_errors.append("Password must contain at least one number.")
             
-
-            print(user_id_valid, email_address_valid, user_name_valid, password_valid)
-            print(create_account_errors)
+            # Check if all inputs are valid and create new user in the database
             if user_id_valid and email_address_valid and user_name_valid and password_valid:
                 # PostgreSQL query to create new user account and new record in `users` table
                 db_connect.POSTGRES_CURSOR.execute(f"CREATE USER {user_name_text_field.text()} WITH PASSWORD '{password_text_field.text()}';")
                 db_connect.POSTGRES_CURSOR.execute(f"INSERT INTO users VALUES ('{user_id}', '{user_name_text_field.text()}', '{email_address_text_field.text()}')")
                 db_connect.POSTGRES_CONNECTION.commit()
-                print(f"\nUser {user_name_text_field.text()} created succsessfully!\n")
-
             else:
                 # Throw error in the error box(GUI)
-                print(f"\nUser not created!\n")
-                pass
+                error_msg_box = QMessageBox(self)
+                error_msg_box.setIcon(QMessageBox.Warning)
+                error_msg = '\n'.join(create_account_errors)
+                error_msg_box.setText(error_msg)
+                error_msg_box.setWindowTitle("Error during creating new account")
+                error_msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box = error_msg_box.exec()
+
+
 
 app = QApplication(sys.argv)
 window = RegisterMenu()
