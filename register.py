@@ -88,7 +88,7 @@ class RegisterMenu(QWidget):
 
         # Register Button
         register_button = QPushButton(self)
-        register_button.clicked.connect(lambda : servicenow_register_user())
+        register_button.clicked.connect(lambda : postgres_register_user())
         register_button.setIcon(QIcon(r'images/register.png'))
         register_button.setIconSize(QSize(30, 30))
         register_button.setText("Create Account")
@@ -130,36 +130,53 @@ class RegisterMenu(QWidget):
             user_name_valid = True
             password_valid = True
             
-            # Check if user email is valid
+            create_account_errors = []
+
+            # Check if user email is valid and unique
             email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
             if re.match(email_pattern, email_address_text_field.text()):
                 print("Email Matches")
-                email_address_valid = True
+                db_connect.database_connect()
+                db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE email_address = '{email_address_text_field.text()}'")
+                result = db_connect.POSTGRES_CURSOR.fetchone()
+                if len(result) > 0:
+                    create_account_errors.append(f"Account with email address {email_address_text_field.text()} already exists.")
+                    print(f"Account with email address {email_address_text_field.text()} already exists.")
+                else:
+                    email_address_valid = True
             else:
+                create_account_errors.append("Email address is not valid.")
                 print("Email does not match")
             
             # Check if user name is valid and unique
-            query = f"SELECT * FROM users WHERE user_name = {user_name_text_field.text()}"
+            db_connect.database_connect()
+            db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE user_name = '{user_name_text_field.text()}'")
+            result = db_connect.POSTGRES_CURSOR.fetchone()
+            if len(result) > 0:
+                create_account_errors.append(f"Username {user_name_text_field.text()} already exists.")
+                print(f"Username {user_name_text_field.text()} already exists.")
+                user_name_valid = False
 
 
 
             # Check if password is valid
             password_pattern = r'!@#$%^&*()-+?_=,<>/'
-            password_errors = []
             if password_text_field.text() != password_text_field_rep.text():
                 password_valid = False
-                password_errors.append('Password does not match')
+                create_account_errors.append('Password does not match')
             if len(password_text_field.text()) < 8:
                 password_valid = False
-                password_errors.append('Password is too short. It must be at least 8 characters.')
+                create_acount_errors.append('Password is too short. It must be at least 8 characters.')
             if not re.match(password_pattern, password_text_field.text()):
                 password_valid = False
-                password_errors.append("Password must contain at least one special character.")
+                create_account_errors.append("Password must contain at least one special character.")
             if not re.match("[A-Z]", password_text_field.text()):
                 password_valid = False
-                password_errors.append("Password must contain at least one uppercase letter.")
+                create_account_errors.append("Password must contain at least one uppercase letter.")
             if not re.match("[0-9]", password_text_field.text()):
                 password_valid = False
+                create_account_errors.append("Password must contain at least one number.")
+                
 
 
 app = QApplication(sys.argv)

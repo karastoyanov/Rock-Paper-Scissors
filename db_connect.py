@@ -1,9 +1,14 @@
 import psycopg2, sshtunnel
 from decouple import config
 
-
+POSTGRES_CURSOR = ''
+POSTGRES_CONNECTION = ''
 
 def database_connect():
+
+    global POSTGRES_CURSOR
+    global POSTGRES_CONNECTION
+
     LINUX_USERNAME = config('LINUX_USERNAME')
     LINUX_PASSWORD = config('LINUX_PASSWORD')
 
@@ -27,5 +32,8 @@ def database_connect():
             )
     cursor = db_client.cursor()
 
+    POSTGRES_CURSOR = cursor
+    POSTGRES_CONNECTION = db_client
 
-database_connect()
+
+#database_connect()
