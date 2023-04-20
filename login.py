@@ -1,10 +1,17 @@
 #!/usr/bin/python3
 
-from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QPlainTextEdit, QHBoxLayout, QVBoxLayout, QMainWindow, QFormLayout, QGroupBox, QGridLayout)
+from PyQt5.QtWidgets import (QApplication, 
+                             QWidget, 
+                             QPushButton, 
+                             QLabel, 
+                             QLineEdit, 
+                             QMessageBox, 
+                             QHBoxLayout, 
+                             QVBoxLayout) 
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import random, sys
-import pysnc
+import db_connect
 
 
 class LoginMenu(QWidget):
@@ -16,8 +23,6 @@ class LoginMenu(QWidget):
         self.setMaximumWidth(800)
         self.setMaximumHeight(400)
         self.initUI()
-    
-
 
     def initUI(self):
 
@@ -37,7 +42,7 @@ class LoginMenu(QWidget):
         user_name_label.setAlignment(Qt.AlignCenter)
     
         user_name_text_field = QLineEdit(self)
-        user_name_text_field.setFont(QFont(families[0], 12))
+        #user_name_text_field.setFont(QFont(families[0], 12))
         user_name_text_field.setAlignment(Qt.AlignCenter)
         user_name_text_field.setFixedWidth(300)
 
@@ -48,7 +53,7 @@ class LoginMenu(QWidget):
 
         password_text_field = QLineEdit(self)
         password_text_field.setEchoMode(QLineEdit.Password)
-        password_text_field.setFont(QFont(families[0], 12))
+        #password_text_field.setFont(QFont(families[0], 12))
         password_text_field.setAlignment(Qt.AlignCenter)
         password_text_field.setFixedWidth(300)
 
@@ -67,6 +72,7 @@ class LoginMenu(QWidget):
 
         # Login Button
         login_button = QPushButton(self)
+        login_button.clicked.connect(lambda : login())
         login_button.setIcon(QIcon(r'images/login.png'))
         login_button.setIconSize(QSize(30, 30))
         login_button.setText("Login")
@@ -92,9 +98,14 @@ class LoginMenu(QWidget):
         main_layout.addLayout(buttons_layout)
         self.setLayout(main_layout)
         self.show()
+        
+        def login():
+            db_connect.user_connect(user_name_text_field.text(), password_text_field.text()) # Init DB Connection
 
-
-
+            if db_connect:
+                print("Connection succsessfull!")
+            else:
+                print("Not connected!")
 
 
 
@@ -105,7 +116,3 @@ app = QApplication(sys.argv)
 window = LoginMenu()
 window.show()
 app.exec()
-
-
-#client = pysnc.ServiceNowClient('dev109438', ('admin', 'LrmsjVJB@8^3'))
-#gr = client.GlideRecord('problem')
