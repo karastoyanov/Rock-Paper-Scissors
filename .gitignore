@@ -12,3 +12,4 @@ v0.1_alpha/
 
 # Ignore DB Credentials
 database_credentials.txt
+.env

@@ -1,11 +1,14 @@
 import psycopg2, sshtunnel
+from decouple import config
+
+
 
 def database_connect():
-    LINUX_USERNAME = 'rps-user'
-    LINUX_PASSWORD = 'rpsuser'
+    LINUX_USERNAME = config('LINUX_USERNAME')
+    LINUX_PASSWORD = config('LINUX_PASSWORD')
 
-    DB_USER_NAME = 'rpsuser'
-    DB_PASSWORD = 'Parola12345'
+    DB_USERNAME = config('DB_USERNAME')
+    DB_PASSWORD = config('DB_PASSWORD')
 
     tunnel = sshtunnel.SSHTunnelForwarder(
             ('139.144.178.197', 22),
@@ -16,7 +19,7 @@ def database_connect():
     tunnel.start()
 
     db_client = psycopg2.connect(
-            user = str(DB_USER_NAME),
+            user = str(DB_USERNAME),
             password = str(DB_PASSWORD),
             host = '139.144.178.197',
             port = '5432',
@@ -25,4 +28,4 @@ def database_connect():
     cursor = db_client.cursor()
 
 
-#database_connect()
+database_connect()
