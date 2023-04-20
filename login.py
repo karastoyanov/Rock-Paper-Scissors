@@ -42,7 +42,7 @@ class LoginMenu(QWidget):
         user_name_label.setAlignment(Qt.AlignCenter)
     
         user_name_text_field = QLineEdit(self)
-        #user_name_text_field.setFont(QFont(families[0], 12))
+        user_name_text_field.setFont(QFont('Arial', 12))
         user_name_text_field.setAlignment(Qt.AlignCenter)
         user_name_text_field.setFixedWidth(300)
 
@@ -53,7 +53,7 @@ class LoginMenu(QWidget):
 
         password_text_field = QLineEdit(self)
         password_text_field.setEchoMode(QLineEdit.Password)
-        #password_text_field.setFont(QFont(families[0], 12))
+        password_text_field.setFont(QFont('Arial', 12))
         password_text_field.setAlignment(Qt.AlignCenter)
         password_text_field.setFixedWidth(300)
 
@@ -100,12 +100,16 @@ class LoginMenu(QWidget):
         self.show()
         
         def login():
-            db_connect.user_connect(user_name_text_field.text(), password_text_field.text()) # Init DB Connection
-
-            if db_connect:
-                print("Connection succsessfull!")
-            else:
-                print("Not connected!")
+            try:
+                db_connect.user_connect(user_name_text_field.text(), password_text_field.text()) # Init DB Connection
+                print("Connected!")
+            except:
+                error_msg_box = QMessageBox(self)
+                error_msg_box.setIcon(QMessageBox.Warning)
+                error_msg_box.setText("Wrong user name or password")
+                error_msg_box.setWindowTitle("Error during login")
+                error_msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box = error_msg_box.exec()
 
 
 

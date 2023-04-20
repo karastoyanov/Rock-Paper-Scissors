@@ -41,7 +41,7 @@ class RegisterMenu(QWidget):
         email_address_label.setAlignment(Qt.AlignCenter)
 
         email_address_text_field = QLineEdit(self)
-        # email_address_text_field.setFont(QFont(families[0], 10))
+        email_address_text_field.setFont(QFont('Arial', 12))
         email_address_text_field.setAlignment(Qt.AlignCenter)
         email_address_text_field.setFixedWidth(300)
 
@@ -51,7 +51,7 @@ class RegisterMenu(QWidget):
         user_name_label.setAlignment(Qt.AlignCenter)
 
         user_name_text_field = QLineEdit(self)
-        # user_name_text_field.setFont(QFont(families[0], 10))
+        user_name_text_field.setFont(QFont('Arial', 12))
         user_name_text_field.setAlignment(Qt.AlignCenter)
         user_name_text_field.setFixedWidth(300)
         
@@ -61,7 +61,7 @@ class RegisterMenu(QWidget):
         password_label.setAlignment(Qt.AlignCenter)
 
         password_text_field = QLineEdit(self)
-        # password_text_field.setFont(QFont(families[0], 10))
+        password_text_field.setFont(QFont('Arial', 10))
         password_text_field.setEchoMode(QLineEdit.Password)
         password_text_field.setFixedWidth(300)
         password_text_field.setAlignment(Qt.AlignCenter)
@@ -72,7 +72,7 @@ class RegisterMenu(QWidget):
         password_label_rep.setAlignment(Qt.AlignCenter)
 
         password_text_field_rep = QLineEdit(self)
-        # password_text_field_rep.setFont(QFont(families[0], 10))
+        password_text_field_rep.setFont(QFont('Arial', 12))
         password_text_field_rep.setEchoMode(QLineEdit.Password)
         password_text_field_rep.setFixedWidth(300)
         password_text_field_rep.setAlignment(Qt.AlignCenter)
