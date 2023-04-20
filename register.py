@@ -133,24 +133,27 @@ class RegisterMenu(QWidget):
             
             create_account_errors = [] # This array will store the error during the user account creation and will return them to the error box.
             
+            db_connect.database_connect() # Initialize connection to PostgreSQL DB
+            
             # Generate random user ID
             while True:
                 user_id = ''.join(random.choice(string.digits) for i in range(11))
                 db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE user_id = '{user_id}'")
                 result = db_connect.POSTGRES_CURSOR.fetchone()
-                if len(result) > 0:
+                if result:
                     continue
                 else:
+                    user_id_valid = True
                     break
 
             # Check if user email is valid and unique
             email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
             if re.match(email_pattern, email_address_text_field.text()):
                 print("Email Matches")
-                db_connect.database_connect()
                 db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE email_address = '{email_address_text_field.text()}'")
                 result = db_connect.POSTGRES_CURSOR.fetchone()
-                if len(result) > 0:
+                print(f"\nEmail result is {result}\n")
+                if result != None:
                     create_account_errors.append(f"Account with email address {email_address_text_field.text()} already exists.")
                     print(f"Account with email address {email_address_text_field.text()} already exists.")
                 else:
@@ -160,10 +163,9 @@ class RegisterMenu(QWidget):
                 print("Email does not match")
             
             # Check if user name is valid and unique
-            db_connect.database_connect()
             db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE user_name = '{user_name_text_field.text()}'")
             result = db_connect.POSTGRES_CURSOR.fetchone()
-            if len(result) > 0:
+            if result != None:
                 create_account_errors.append(f"Username {user_name_text_field.text()} already exists.")
                 print(f"Username {user_name_text_field.text()} already exists.")
                 user_name_valid = False
@@ -171,28 +173,36 @@ class RegisterMenu(QWidget):
 
 
             # Check if password is valid
-            password_pattern = r'!@#$%^&*()-+?_=,<>/'
+            #password_pattern = re.compile('!@#$%^&*()-+?_=,<>/')
             if password_text_field.text() != password_text_field_rep.text():
                 password_valid = False
-                create_account_errors.append('Password does not match')
+                create_account_errors.append('Password fields does not match.')
             if len(password_text_field.text()) < 8:
                 password_valid = False
                 create_acount_errors.append('Password is too short. It must be at least 8 characters.')
-            if not re.match(password_pattern, password_text_field.text()):
+            if not re.search(re.compile('[!@#$%^&*()-+?_=,<>/]'), password_text_field.text()):
                 password_valid = False
                 create_account_errors.append("Password must contain at least one special character.")
-            if not re.match("[A-Z]", password_text_field.text()):
+            if not re.search(re.compile('[A-Z]'), password_text_field.text()):
                 password_valid = False
                 create_account_errors.append("Password must contain at least one uppercase letter.")
-            if not re.match("[0-9]", password_text_field.text()):
+            if not re.search(re.compile('[0-9]'), password_text_field.text()):
                 password_valid = False
                 create_account_errors.append("Password must contain at least one number.")
-                
-            if email_address_valid and user_name_valid and password_valid:
+            
+
+            print(user_id_valid, email_address_valid, user_name_valid, password_valid)
+            print(create_account_errors)
+            if user_id_valid and email_address_valid and user_name_valid and password_valid:
                 # PostgreSQL query to create new user account and new record in `users` table
-                pass
+                db_connect.POSTGRES_CURSOR.execute(f"CREATE USER {user_name_text_field.text()} WITH PASSWORD '{password_text_field.text()}';")
+                db_connect.POSTGRES_CURSOR.execute(f"INSERT INTO users VALUES ('{user_id}', '{user_name_text_field.text()}', '{email_address_text_field.text()}')")
+                db_connect.POSTGRES_CONNECTION.commit()
+                print(f"\nUser {user_name_text_field.text()} created succsessfully!\n")
+
             else:
                 # Throw error in the error box(GUI)
+                print(f"\nUser not created!\n")
                 pass
 
 app = QApplication(sys.argv)
