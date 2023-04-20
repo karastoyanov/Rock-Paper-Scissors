@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import (QApplication,
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import db_connect
-import random, sys, re
+import random, sys, re, string
 
 class RegisterMenu(QWidget):
     def __init__(self):
@@ -126,11 +126,22 @@ class RegisterMenu(QWidget):
 
         def postgres_register_user():
             
+            user_id_valid = False
             email_address_valid = False
             user_name_valid = True
             password_valid = True
             
-            create_account_errors = []
+            create_account_errors = [] # This array will store the error during the user account creation and will return them to the error box.
+            
+            # Generate random user ID
+            while True:
+                user_id = ''.join(random.choice(string.digits) for i in range(11))
+                db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE user_id = '{user_id}'")
+                result = db_connect.POSTGRES_CURSOR.fetchone()
+                if len(result) > 0:
+                    continue
+                else:
+                    break
 
             # Check if user email is valid and unique
             email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
@@ -177,7 +188,12 @@ class RegisterMenu(QWidget):
                 password_valid = False
                 create_account_errors.append("Password must contain at least one number.")
                 
-
+            if email_address_valid and user_name_valid and password_valid:
+                # PostgreSQL query to create new user account and new record in `users` table
+                pass
+            else:
+                # Throw error in the error box(GUI)
+                pass
 
 app = QApplication(sys.argv)
 window = RegisterMenu()
