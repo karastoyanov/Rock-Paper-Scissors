@@ -232,10 +232,10 @@ class MainMenu(QWidget):
             round_message = random.choice(tie_messages)
         MainMenu.ROUND_MESSAGE = round_message
 
-
-app = QApplication(sys.argv)
-window = MainMenu()
-window.show()
-app.exec()
+def init_app():
+        app = QApplication(sys.argv)
+        window = MainMenu()
+        window.show()
+        app.exec()
 
 

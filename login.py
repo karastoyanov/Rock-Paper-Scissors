@@ -11,7 +11,8 @@ from PyQt5.QtWidgets import (QApplication,
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import random, sys
-import db_connect
+import db_connect, main_menu
+
 
 
 class LoginMenu(QWidget):
@@ -23,8 +24,11 @@ class LoginMenu(QWidget):
         self.setMaximumWidth(800)
         self.setMaximumHeight(400)
         self.initUI()
+    
+    global window
 
     def initUI(self):
+
 
         # Fonts setting
         font = QFontDatabase.addApplicationFont(r'fonts/ElementalEnd.ttf')
@@ -80,6 +84,7 @@ class LoginMenu(QWidget):
         login_button.setFont(QFont(families[0], 10))
 
         register_button = QPushButton(self)
+        #register_button.clicked.connect(lambda : register())
         register_button.setIcon(QIcon(r'images/register.png'))
         register_button.setIconSize(QSize(30, 30))
         register_button.setText("Register")
@@ -102,7 +107,8 @@ class LoginMenu(QWidget):
         def login():
             try:
                 db_connect.user_connect(user_name_text_field.text(), password_text_field.text()) # Init DB Connection
-                print("Connected!")
+                print("Connected")
+                
             except:
                 error_msg_box = QMessageBox(self)
                 error_msg_box.setIcon(QMessageBox.Warning)
@@ -115,8 +121,11 @@ class LoginMenu(QWidget):
 
 
 
+def init_app():
+    app = QApplication(sys.argv)
+    window = LoginMenu()
+    window.show()
+    app.exec()
 
-app = QApplication(sys.argv)
-window = LoginMenu()
-window.show()
-app.exec()
+
+

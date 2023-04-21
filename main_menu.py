@@ -102,10 +102,10 @@ class MainMenu(QWidget):
 
 
 
-
-app = QApplication(sys.argv)
-window = MainMenu()
-window.show()
-app.exec()
+def init_app():
+    #app = QApplication(sys.argv)
+    window = MainMenu()
+    window.show()
+    #app.exec()
 
 

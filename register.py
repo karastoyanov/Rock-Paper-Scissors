@@ -192,8 +192,9 @@ class RegisterMenu(QWidget):
                 msg_box = error_msg_box.exec()
 
 
+def init_app():
+    app = QApplication(sys.argv)
+    window = RegisterMenu()
+    window.show()
+    app.exec()
 
-app = QApplication(sys.argv)
-window = RegisterMenu()
-window.show()
-app.exec()
