@@ -61,7 +61,7 @@ class RegisterMenu(QWidget):
         password_label.setAlignment(Qt.AlignCenter)
 
         password_text_field = QLineEdit(self)
-        password_text_field.setFont(QFont('Arial', 10))
+        password_text_field.setFont(QFont('Arial', 12))
         password_text_field.setEchoMode(QLineEdit.Password)
         password_text_field.setFixedWidth(300)
         password_text_field.setAlignment(Qt.AlignCenter)
