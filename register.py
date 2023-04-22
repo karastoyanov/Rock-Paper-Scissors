@@ -14,6 +14,11 @@ from PyQt5.QtCore import *
 import db_connect
 import random, sys, re, string
 
+def start_app():
+    global win
+    win = RegisterMenu()
+    win.show()
+
 class RegisterMenu(QWidget):
     def __init__(self):
         super().__init__()

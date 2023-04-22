@@ -14,6 +14,10 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
 
+def start_app():
+    global win
+    win = MainMenu()
+    win.show()
 
 class MainMenu(QWidget):
     def __init__(self):
@@ -24,7 +28,6 @@ class MainMenu(QWidget):
         self.setMaximumWidth(800)
         self.setMaximumHeight(400)
         self.initUI()
-
 
     def initUI(self):
         # Fonts setting
@@ -62,7 +65,6 @@ class MainMenu(QWidget):
         new_login_button.setFont(QFont(families[0], 12))
         new_login_button.setFixedWidth(300)
 
-
         buttons_layout.addWidget(play_button)
         buttons_layout.addWidget(all_players_ranklist)
         buttons_layout.addWidget(edit_user_button)
@@ -85,27 +87,19 @@ class MainMenu(QWidget):
         user_layout.addStretch()
         user_layout.addSpacing(5)
 
-
         horizontal_layout.addLayout(buttons_layout)
         horizontal_layout.addLayout(user_layout)
         horizontal_layout.addStretch()
         horizontal_layout.addSpacing(5)
 
-
         # Main Layout
         main_layout = QVBoxLayout()
         main_layout.addLayout(horizontal_layout)
-        #main_layout.addLayout(buttons_layout)
-        #main_layout.addLayout(user_layout)
         self.setLayout(main_layout)
         self.show()
 
-
-
-def init_app():
-    #app = QApplication(sys.argv)
-    window = MainMenu()
-    window.show()
-    #app.exec()
-
+def init_window():
+    app = QApplication(sys.argv)
+    window = start_app()
+    app.exec_()
 

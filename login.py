@@ -11,8 +11,12 @@ from PyQt5.QtWidgets import (QApplication,
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import random, sys
-import db_connect, main_menu
+import db_connect, main_menu, register
 
+def start_app():
+    global win
+    win = LoginMenu()
+    win.show()
 
 
 class LoginMenu(QWidget):
@@ -76,7 +80,7 @@ class LoginMenu(QWidget):
 
         # Login Button
         login_button = QPushButton(self)
-        login_button.clicked.connect(lambda : login())
+        login_button.clicked.connect(lambda : open_login(self))
         login_button.setIcon(QIcon(r'images/login.png'))
         login_button.setIconSize(QSize(30, 30))
         login_button.setText("Login")
@@ -84,7 +88,7 @@ class LoginMenu(QWidget):
         login_button.setFont(QFont(families[0], 10))
 
         register_button = QPushButton(self)
-        #register_button.clicked.connect(lambda : register())
+        register_button.clicked.connect(lambda : open_register(self))
         register_button.setIcon(QIcon(r'images/register.png'))
         register_button.setIconSize(QSize(30, 30))
         register_button.setText("Register")
@@ -104,11 +108,12 @@ class LoginMenu(QWidget):
         self.setLayout(main_layout)
         self.show()
         
-        def login():
+        def open_login(self):
             try:
                 db_connect.user_connect(user_name_text_field.text(), password_text_field.text()) # Init DB Connection
                 print("Connected")
-                
+                main_menu.start_app()
+                win.hide()
             except:
                 error_msg_box = QMessageBox(self)
                 error_msg_box.setIcon(QMessageBox.Warning)
@@ -117,15 +122,17 @@ class LoginMenu(QWidget):
                 error_msg_box.setStandardButtons(QMessageBox.Ok)
                 msg_box = error_msg_box.exec()
 
+        def open_register(self):
+            register.start_app()
+            win.hide()
+            
+        
 
 
 
-
-def init_app():
-    app = QApplication(sys.argv)
-    window = LoginMenu()
-    window.show()
-    app.exec()
+app = QApplication(sys.argv)
+window = start_app()
+app.exec_()
 
 
 
