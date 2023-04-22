@@ -13,6 +13,9 @@ from PyQt5.QtCore import *
 import random, sys
 import db_connect, main_menu, register
 
+USERNAME = ''
+
+
 def start_app():
     global win
     win = LoginMenu()

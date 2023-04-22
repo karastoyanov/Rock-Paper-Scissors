@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import (QApplication,
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
+import db_connect
 
 def start_app():
     global win
@@ -77,11 +78,34 @@ class MainMenu(QWidget):
         user_layout = QVBoxLayout()
         user_layout.addStretch()
         user_layout.addSpacing(5)
-
+        
+        # Create separate group box for the right section
         group_two = QGroupBox(self)
         group_two.setFixedWidth(500)
         group_two.setFixedHeight(400)
+        # Create new vertical layout and insert it in the right section(group_two)
+        user_name_info = QVBoxLayout(self)
+        user_name_info.addStretch()
+        user_name_info.addSpacing(5)
+        # Create separate object inside the user_name_info vertical layout
+        user_name = QLabel(self)
+        db_connect.USER_POSTGRES_CURSOR.execute("SELECT current_user;")
+        user_name_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        user_name.setText(f"Hello, {user_name_result[0]}")
+        user_name.setFont(QFont(families[0], 10))
+        
+        user_rank = QLabel(self)
+        db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT user_rank FROM users WHERE user_name = '{user_name_result[0]}'")
+        #user_rank_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        #user_rank.setText(f'Your rank is: {user_rank_result[0]}')
+        #user_rank.setFont(QFont(families[0], 10))
 
+        user_name_info.addWidget(user_name)
+        #user_name_info.addWidget(user_rank)
+        
+        group_two.setLayout(user_name_info)
+
+        # Add right section to the user layout and allign it to right(left is reserved for buttons)
         user_layout.addWidget(group_two)
         user_layout.setAlignment(Qt.AlignRight)
         user_layout.addStretch()
@@ -103,3 +127,6 @@ def init_window():
     window = start_app()
     app.exec_()
 
+#app = QApplication(sys.argv)
+#window = start_app()
+#app.exec_()

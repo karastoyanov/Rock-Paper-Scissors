@@ -4,6 +4,9 @@ from decouple import config
 POSTGRES_CURSOR = ''
 POSTGRES_CONNECTION = ''
 
+USER_POSTGRES_CURSOR = ''
+USER_POSTGRES_CONNECTION = ''
+
 # Connect with Admin(Used for New Accounts Registration)
 def database_connect():
 
@@ -41,8 +44,8 @@ def database_connect():
 # Connect with Player
 def user_connect(user_name, user_passwd):
     
-    global POSTGRES_CURSOR
-    global POSTGRES_CONNECTION
+    global USER_POSTGRES_CURSOR
+    global USER_POSTGRES_CONNECTION
     
     LINUX_USERNAME = config('LINUX_USERNAME')
     LINUX_PASSWORD = config('LINUX_PASSWORD')
@@ -67,7 +70,7 @@ def user_connect(user_name, user_passwd):
             )
     cursor = db_client.cursor()
 
-    POSTGRES_CURSOR = cursor
-    POSTGRES_CONNECTION = db_client
+    USER_POSTGRES_CURSOR = cursor
+    USER_POSTGRES_CONNECTION = db_client
 
 #database_connect()

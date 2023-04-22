@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import (QApplication,
                              QVBoxLayout) 
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import db_connect
+import db_connect, login
 import random, sys, re, string
 
 def start_app():
@@ -134,7 +134,7 @@ class RegisterMenu(QWidget):
             
             # Generate random user ID
             while True:
-                user_id = ''.join(random.choice(string.digits) for i in range(11))
+                user_id = ''.join(random.choice(string.digits) for i in range(1, 11))
                 db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE user_id = '{user_id}'")
                 result = db_connect.POSTGRES_CURSOR.fetchone()
                 if result:
@@ -186,6 +186,17 @@ class RegisterMenu(QWidget):
                 db_connect.POSTGRES_CURSOR.execute(f"CREATE USER {user_name_text_field.text()} WITH PASSWORD '{password_text_field.text()}';")
                 db_connect.POSTGRES_CURSOR.execute(f"INSERT INTO users VALUES ('{user_id}', '{user_name_text_field.text()}', '{email_address_text_field.text()}')")
                 db_connect.POSTGRES_CONNECTION.commit()
+                # Throw msg box 
+                reg_msg_box = QMessageBox(self)
+                reg_msg_box.setIcon(QMessageBox.Information)
+                reg_msg_box.setText("Account created successfully")
+                reg_msg_box.setWindowTitle("You have created a new account")
+                reg_msg_box.setStandardButtons(QMessageBox.Ok)
+                reg_box = reg_msg_box.exec()
+                # Return to Login screen
+                login.start_app()
+                win.hide()
+
             else:
                 # Throw error in the error box(GUI)
                 error_msg_box = QMessageBox(self)
