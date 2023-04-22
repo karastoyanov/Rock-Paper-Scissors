@@ -91,17 +91,24 @@ class MainMenu(QWidget):
         user_name = QLabel(self)
         db_connect.USER_POSTGRES_CURSOR.execute("SELECT current_user;")
         user_name_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
-        user_name.setText(f"Hello, {user_name_result[0]}")
+        user_name_result = user_name_result[0]
+        db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT user_id FROM users WHERE user_name = '{user_name_result}'")
+        user_id_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        user_id_result = user_id_result[0]
+        db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT user_rank FROM users WHERE user_name = '{user_name_result}'")
+        user_rank_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        user_rank_result = user_rank_result[0]
+        user_name.setText(f"Hello {user_name_result}\nID: {user_id_result}\nRank: {user_rank_result}")
         user_name.setFont(QFont(families[0], 10))
         
-        user_rank = QLabel(self)
-        db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT user_rank FROM users WHERE user_name = '{user_name_result[0]}'")
-        #user_rank_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
-        #user_rank.setText(f'Your rank is: {user_rank_result[0]}')
-        #user_rank.setFont(QFont(families[0], 10))
+        # user_rank = QLabel(self)
+        # db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT user_rank FROM users WHERE user_name = 'Mormaugus';")
+        # user_rank_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        # user_rank.setText(f'Your rank is: {user_rank_result[0]}')
+        # user_rank.setFont(QFont(families[0], 10))
 
         user_name_info.addWidget(user_name)
-        #user_name_info.addWidget(user_rank)
+        # user_name_info.addWidget(user_rank)
         
         group_two.setLayout(user_name_info)
 

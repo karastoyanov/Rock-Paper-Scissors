@@ -46,7 +46,7 @@ class RegisterMenu(QWidget):
         email_address_label.setAlignment(Qt.AlignCenter)
 
         email_address_text_field = QLineEdit(self)
-        email_address_text_field.setFont(QFont('Arial', 12))
+        email_address_text_field.setFont(QFont(families[0], 12))
         email_address_text_field.setAlignment(Qt.AlignCenter)
         email_address_text_field.setFixedWidth(300)
 
@@ -56,7 +56,7 @@ class RegisterMenu(QWidget):
         user_name_label.setAlignment(Qt.AlignCenter)
 
         user_name_text_field = QLineEdit(self)
-        user_name_text_field.setFont(QFont('Arial', 12))
+        user_name_text_field.setFont(QFont(families[0], 12))
         user_name_text_field.setAlignment(Qt.AlignCenter)
         user_name_text_field.setFixedWidth(300)
         
@@ -66,7 +66,7 @@ class RegisterMenu(QWidget):
         password_label.setAlignment(Qt.AlignCenter)
 
         password_text_field = QLineEdit(self)
-        password_text_field.setFont(QFont('Arial', 12))
+        password_text_field.setFont(QFont(families[0], 12))
         password_text_field.setEchoMode(QLineEdit.Password)
         password_text_field.setFixedWidth(300)
         password_text_field.setAlignment(Qt.AlignCenter)
@@ -77,7 +77,7 @@ class RegisterMenu(QWidget):
         password_label_rep.setAlignment(Qt.AlignCenter)
 
         password_text_field_rep = QLineEdit(self)
-        password_text_field_rep.setFont(QFont('Arial', 12))
+        password_text_field_rep.setFont(QFont(families[0], 12))
         password_text_field_rep.setEchoMode(QLineEdit.Password)
         password_text_field_rep.setFixedWidth(300)
         password_text_field_rep.setAlignment(Qt.AlignCenter)
@@ -184,7 +184,8 @@ class RegisterMenu(QWidget):
             if user_id_valid and email_address_valid and user_name_valid and password_valid:
                 # PostgreSQL query to create new user account and new record in `users` table
                 db_connect.POSTGRES_CURSOR.execute(f"CREATE USER {user_name_text_field.text()} WITH PASSWORD '{password_text_field.text()}';")
-                db_connect.POSTGRES_CURSOR.execute(f"INSERT INTO users VALUES ('{user_id}', '{user_name_text_field.text()}', '{email_address_text_field.text()}')")
+                db_connect.POSTGRES_CURSOR.execute(f"INSERT INTO users VALUES ('{user_id}', '{user_name_text_field.text().lower()}', '{email_address_text_field.text()}');")
+                db_connect.POSTGRES_CURSOR.execute(f"GRANT rpsrole TO {user_name_text_field.text()};")
                 db_connect.POSTGRES_CONNECTION.commit()
                 # Throw msg box 
                 reg_msg_box = QMessageBox(self)

@@ -53,7 +53,7 @@ class LoginMenu(QWidget):
         user_name_label.setAlignment(Qt.AlignCenter)
     
         user_name_text_field = QLineEdit(self)
-        user_name_text_field.setFont(QFont('Arial', 12))
+        user_name_text_field.setFont(QFont(families[0], 12))
         user_name_text_field.setAlignment(Qt.AlignCenter)
         user_name_text_field.setFixedWidth(300)
 
@@ -113,7 +113,7 @@ class LoginMenu(QWidget):
         
         def open_login(self):
             try:
-                db_connect.user_connect(user_name_text_field.text(), password_text_field.text()) # Init DB Connection
+                db_connect.user_connect(user_name_text_field.text().lower(), password_text_field.text()) # Init DB Connection
                 print("Connected")
                 main_menu.start_app()
                 win.hide()
