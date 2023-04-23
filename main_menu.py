@@ -105,10 +105,12 @@ class MainMenu(QWidget):
         
         # Create User Avatar
         image = QImage()
-        url_image = r'images\avatars\soldier1.jpg'
+        url_image = r'https://github.com/karastoyanov/Rock-Paper-Scissors/blob/dev/images/avatars/soldier1.jpg?raw=true'
         image.loadFromData(requests.get(url_image).content)
         user_avatar_label = QLabel(self)
         user_avatar_label.setPixmap(QPixmap(image))
+        user_avatar_label.setMaximumHeight(150)
+        user_avatar_label.setMaximumWidth(150)
         
         
 
