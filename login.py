@@ -53,9 +53,9 @@ class LoginMenu(QWidget):
         user_name_label.setAlignment(Qt.AlignCenter)
     
         user_name_text_field = QLineEdit(self)
-        user_name_text_field.setFont(QFont(families[0], 12))
+        user_name_text_field.setFont(QFont(families[0], 10))
         user_name_text_field.setAlignment(Qt.AlignCenter)
-        user_name_text_field.setFixedWidth(300)
+        user_name_text_field.setFixedWidth(400)
 
         password_label = QLabel(self)
         password_label.setText('password')
@@ -64,9 +64,9 @@ class LoginMenu(QWidget):
 
         password_text_field = QLineEdit(self)
         password_text_field.setEchoMode(QLineEdit.Password)
-        password_text_field.setFont(QFont('Arial', 12))
+        password_text_field.setFont(QFont('Arial', 10))
         password_text_field.setAlignment(Qt.AlignCenter)
-        password_text_field.setFixedWidth(300)
+        password_text_field.setFixedWidth(400)
 
         login_layout.addWidget(user_name_label)
         login_layout.addWidget(user_name_text_field)
@@ -87,7 +87,7 @@ class LoginMenu(QWidget):
         login_button.setIcon(QIcon(r'images/login.png'))
         login_button.setIconSize(QSize(30, 30))
         login_button.setText("login")
-        login_button.setFixedWidth(147)
+        login_button.setFixedWidth(200)
         login_button.setFont(QFont(families[0], 10))
 
         register_button = QPushButton(self)
@@ -95,7 +95,7 @@ class LoginMenu(QWidget):
         register_button.setIcon(QIcon(r'images/register.png'))
         register_button.setIconSize(QSize(30, 30))
         register_button.setText("register")
-        register_button.setFixedWidth(147)
+        register_button.setFixedWidth(200)
         register_button.setFont(QFont(families[0], 10))
 
         buttons_layout.addWidget(login_button)

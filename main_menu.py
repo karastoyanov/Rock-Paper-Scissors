@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import (QApplication,
                              QGroupBox) 
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sys
+import sys, requests
 import db_connect, login
 
 def start_app():
@@ -101,11 +101,21 @@ class MainMenu(QWidget):
         user_rank_result = user_rank_result[0]
         user_name.setText(f"hello {user_name_result}\nid: {user_id_result}\nrank: {user_rank_result}")
         user_name.setFont(QFont(families[0], 10))
+        user_name.setAlignment(Qt.AlignLeft)
+        
+        # Create User Avatar
+        image = QImage()
+        url_image = r'images\avatars\soldier1.jpg'
+        image.loadFromData(requests.get(url_image).content)
+        user_avatar_label = QLabel(self)
+        user_avatar_label.setPixmap(QPixmap(image))
+        
+        
 
 
 
         user_name_info.addWidget(user_name)
-               
+        user_name_info.addWidget(user_avatar_label)
         group_two.setLayout(user_name_info)
 
         # Add right section to the user layout and allign it to right(left is reserved for buttons)
