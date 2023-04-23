@@ -184,7 +184,8 @@ class RegisterMenu(QWidget):
             if user_id_valid and email_address_valid and user_name_valid and password_valid:
                 # PostgreSQL query to create new user account and new record in `users` table
                 db_connect.POSTGRES_CURSOR.execute(f"CREATE USER {user_name_text_field.text()} WITH PASSWORD '{password_text_field.text()}';")
-                db_connect.POSTGRES_CURSOR.execute(f"INSERT INTO users VALUES ('{user_id}', '{user_name_text_field.text().lower()}', '{email_address_text_field.text()}');")
+                db_connect.POSTGRES_CURSOR.execute(f"INSERT INTO users VALUES ('{user_id}', '{user_name_text_field.text()}', '{email_address_text_field.text()}');")
+                #db_connect.POSTGRES_CURSOR.execute(f"INSERT INTO users VALUES ('{user_id}', '{user_name_text_field.text()}', '{email_address_text_field.text()}');")
                 db_connect.POSTGRES_CURSOR.execute(f"GRANT rpsrole TO {user_name_text_field.text()};")
                 db_connect.POSTGRES_CONNECTION.commit()
                 # Throw msg box 

@@ -9,4 +9,4 @@ import login, main_menu, register
 #player_client = db_connect.user_connect(register.user_name_text_field.text(), register.user_name_text_field.text())
 
 
-login.LoginMenu()
+login.start_app()

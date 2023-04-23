@@ -48,7 +48,7 @@ class LoginMenu(QWidget):
         login_layout.addSpacing(10)
 
         user_name_label = QLabel(self)
-        user_name_label.setText('User Name')
+        user_name_label.setText('user Name')
         user_name_label.setFont(QFont(families[0], 10))
         user_name_label.setAlignment(Qt.AlignCenter)
     
@@ -58,7 +58,7 @@ class LoginMenu(QWidget):
         user_name_text_field.setFixedWidth(300)
 
         password_label = QLabel(self)
-        password_label.setText('Password')
+        password_label.setText('password')
         password_label.setFont(QFont(families[0], 10))
         password_label.setAlignment(Qt.AlignCenter)
 
@@ -86,7 +86,7 @@ class LoginMenu(QWidget):
         login_button.clicked.connect(lambda : open_login(self))
         login_button.setIcon(QIcon(r'images/login.png'))
         login_button.setIconSize(QSize(30, 30))
-        login_button.setText("Login")
+        login_button.setText("login")
         login_button.setFixedWidth(147)
         login_button.setFont(QFont(families[0], 10))
 
@@ -94,7 +94,7 @@ class LoginMenu(QWidget):
         register_button.clicked.connect(lambda : open_register(self))
         register_button.setIcon(QIcon(r'images/register.png'))
         register_button.setIconSize(QSize(30, 30))
-        register_button.setText("Register")
+        register_button.setText("register")
         register_button.setFixedWidth(147)
         register_button.setFont(QFont(families[0], 10))
 

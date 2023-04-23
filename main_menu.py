@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import (QApplication,
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
-import db_connect
+import db_connect, login
 
 def start_app():
     global win
@@ -47,29 +47,30 @@ class MainMenu(QWidget):
         buttons_layout.addSpacing(5)
 
         play_button = QPushButton(self)
-        play_button.setText("Play New Game")
+        play_button.setText("play new game")
         play_button.setFont(QFont(families[0], 12))
         play_button.setFixedWidth(300)
 
         all_players_ranklist = QPushButton(self)
-        all_players_ranklist.setText("Players ranklist")
+        all_players_ranklist.setText("players ranklist")
         all_players_ranklist.setFont(QFont(families[0], 12))
         all_players_ranklist.setFixedWidth(300)
 
         edit_user_button = QPushButton(self)
-        edit_user_button.setText("Edit User")
+        edit_user_button.setText("edit user")
         edit_user_button.setFont(QFont(families[0], 12))
         edit_user_button.setFixedWidth(300)
 
-        new_login_button = QPushButton(self)
-        new_login_button.setText("Logout")
-        new_login_button.setFont(QFont(families[0], 12))
-        new_login_button.setFixedWidth(300)
+        logout = QPushButton(self)
+        logout.clicked.connect(lambda : open_logout())
+        logout.setText("logout")
+        logout.setFont(QFont(families[0], 12))
+        logout.setFixedWidth(300)
 
         buttons_layout.addWidget(play_button)
         buttons_layout.addWidget(all_players_ranklist)
         buttons_layout.addWidget(edit_user_button)
-        buttons_layout.addWidget(new_login_button)
+        buttons_layout.addWidget(logout)
         buttons_layout.setAlignment(Qt.AlignLeft)
         buttons_layout.addStretch()
         buttons_layout.addSpacing(5)
@@ -98,18 +99,13 @@ class MainMenu(QWidget):
         db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT user_rank FROM users WHERE user_name = '{user_name_result}'")
         user_rank_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
         user_rank_result = user_rank_result[0]
-        user_name.setText(f"Hello {user_name_result}\nID: {user_id_result}\nRank: {user_rank_result}")
+        user_name.setText(f"hello {user_name_result}\nid: {user_id_result}\nrank: {user_rank_result}")
         user_name.setFont(QFont(families[0], 10))
-        
-        # user_rank = QLabel(self)
-        # db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT user_rank FROM users WHERE user_name = 'Mormaugus';")
-        # user_rank_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
-        # user_rank.setText(f'Your rank is: {user_rank_result[0]}')
-        # user_rank.setFont(QFont(families[0], 10))
+
+
 
         user_name_info.addWidget(user_name)
-        # user_name_info.addWidget(user_rank)
-        
+               
         group_two.setLayout(user_name_info)
 
         # Add right section to the user layout and allign it to right(left is reserved for buttons)
@@ -128,6 +124,10 @@ class MainMenu(QWidget):
         main_layout.addLayout(horizontal_layout)
         self.setLayout(main_layout)
         self.show()
+        
+        def open_logout():
+            login.start_app()
+            win.hide()
 
 def init_window():
     app = QApplication(sys.argv)
