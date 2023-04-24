@@ -134,7 +134,11 @@ class RegisterMenu(QWidget):
             
             # Generate random user ID
             while True:
-                user_id = ''.join(random.choice(string.digits) for i in range(1, 11))
+                #user_id = ''.join(random.choice(string.digits) for i in range(1, 11))
+                user_id = []
+                for i in range(1, 11):
+                    user_id.append(random.choice(string.digits))
+                user_id = ''.join(user_id)
                 db_connect.POSTGRES_CURSOR.execute(f"SELECT * FROM users WHERE user_id = '{user_id}'")
                 result = db_connect.POSTGRES_CURSOR.fetchone()
                 if result:
