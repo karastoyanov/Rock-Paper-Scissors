@@ -75,19 +75,24 @@ class MainMenu(QWidget):
         buttons_layout.addStretch()
         buttons_layout.addSpacing(5)
 
-        # User View Menu
-        user_layout = QVBoxLayout()
-        user_layout.addStretch()
-        user_layout.addSpacing(5)
-        
+
+
+
         # Create separate group box for the right section
         group_two = QGroupBox(self)
         group_two.setFixedWidth(500)
         group_two.setFixedHeight(400)
+        
+        # User View Menu
+        user_layout = QHBoxLayout()
+        user_layout.addStretch()
+        user_layout.addSpacing(5)
+
         # Create new vertical layout and insert it in the right section(group_two)
-        user_name_info = QVBoxLayout(self)
+        user_name_info = QHBoxLayout(self)
         user_name_info.addStretch()
         user_name_info.addSpacing(5)
+        
         # Create separate object inside the user_name_info vertical layout
         user_name = QLabel(self)
         db_connect.USER_POSTGRES_CURSOR.execute("SELECT current_user;")
@@ -111,13 +116,28 @@ class MainMenu(QWidget):
         user_avatar_label.setPixmap(QPixmap(image))
         user_avatar_label.setMaximumHeight(150)
         user_avatar_label.setMaximumWidth(150)
+        user_avatar_label.setAlignment(Qt.AlignLeft)
         
+        total_games_played = QLabel(self)
+        db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT total_games FROM users where user_name = '{user_name_result}'")
+        total_games_played_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        total_games_played_result = total_games_played_result[0]
+        total_games_played.setText(f'total games played: {total_games_played_result}\n')
+        total_games_played.setFont(QFont(families[0], 10))
+        total_games_played.setAlignment(Qt.AlignLeft)
         
-
-
+        total_points = QLabel(self)
+        db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT total_points FROM users WHERE user_name = '{user_name_result}'")
+        total_points_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        total_points_result = total_points_result[0]
+        total_points.setText(f"total points: {total_points_result}")
+        total_points.setFont(QFont(families[0], 10))
+        total_points.setAlignment(Qt.AlignLeft)
 
         user_name_info.addWidget(user_name)
         user_name_info.addWidget(user_avatar_label)
+        user_name_info.addWidget(total_games_played)
+        user_name_info.addWidget(total_points)
         group_two.setLayout(user_name_info)
 
         # Add right section to the user layout and allign it to right(left is reserved for buttons)

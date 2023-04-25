@@ -14,3 +14,6 @@ bakFiles/
 # Ignore DB Credentials
 database_credentials.txt
 .env
+
+# Ignore debug log file
+debug.log
