@@ -9,9 +9,11 @@ from PyQt5.QtWidgets import (QApplication,
                              QPlainTextEdit, 
                              QHBoxLayout, 
                              QVBoxLayout,
-                             QGroupBox) 
+                             QGroupBox,
+                             QGraphicsDropShadowEffect) 
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+# from colorama import Fore
 import sys, requests
 import db_connect, login
 
@@ -25,9 +27,9 @@ class MainMenu(QWidget):
         super().__init__()
         self.setWindowTitle("A game of Rock-Paper-Scissors - Main Menu")
         self.setWindowIcon(QIcon(r'images/console.png'))
-        self.setGeometry(650, 300, 800, 400)
+        self.setGeometry(650, 300, 800, 300)
         self.setMaximumWidth(800)
-        self.setMaximumHeight(400)
+        self.setMaximumHeight(300)
         self.initUI()
 
     def initUI(self):
@@ -36,124 +38,140 @@ class MainMenu(QWidget):
         if font < 0: print("Error in fonts.")
         families = QFontDatabase.applicationFontFamilies(font)
         
-        # Main Horizontal Layout
-        horizontal_layout = QHBoxLayout()
-        horizontal_layout.addStretch()
-        horizontal_layout.addSpacing(5)
-
+        # Right group objects (for buttons layout)
         # Buttons Layout
         buttons_layout = QVBoxLayout()
         buttons_layout.addStretch()
         buttons_layout.addSpacing(5)
-
+        
         play_button = QPushButton(self)
         play_button.setText("play new game")
         play_button.setFont(QFont(families[0], 12))
         play_button.setFixedWidth(300)
+        play_button.setStyleSheet("background-color: #009933; color: #FFFFFF;")
+
 
         all_players_ranklist = QPushButton(self)
         all_players_ranklist.setText("players ranklist")
         all_players_ranklist.setFont(QFont(families[0], 12))
         all_players_ranklist.setFixedWidth(300)
+        all_players_ranklist.setStyleSheet("background-color: #009933; color: #FFFFFF;")
 
         edit_user_button = QPushButton(self)
         edit_user_button.setText("edit user")
         edit_user_button.setFont(QFont(families[0], 12))
         edit_user_button.setFixedWidth(300)
+        edit_user_button.setStyleSheet("background-color: #009933; color: #FFFFFF;")
 
         logout = QPushButton(self)
         logout.clicked.connect(lambda : open_logout())
         logout.setText("logout")
         logout.setFont(QFont(families[0], 12))
         logout.setFixedWidth(300)
-
+        logout.setStyleSheet("background-color: #009933; color: #FFFFFF;")
+        
+        right_dummy_group = QGroupBox(self)
+        right_dummy_group.setFixedWidth(300)
+        right_dummy_group.setFixedHeight(100)
+        
         buttons_layout.addWidget(play_button)
         buttons_layout.addWidget(all_players_ranklist)
         buttons_layout.addWidget(edit_user_button)
         buttons_layout.addWidget(logout)
-        buttons_layout.setAlignment(Qt.AlignLeft)
+        buttons_layout.addWidget(right_dummy_group)
+        buttons_layout.setAlignment(Qt.AlignRight)
         buttons_layout.addStretch()
         buttons_layout.addSpacing(5)
-
-
-
-
-        # Create separate group box for the right section
-        group_two = QGroupBox(self)
-        group_two.setFixedWidth(500)
-        group_two.setFixedHeight(400)
         
-        # User View Menu
-        user_layout = QHBoxLayout()
-        user_layout.addStretch()
-        user_layout.addSpacing(5)
-
-        # Create new vertical layout and insert it in the right section(group_two)
-        user_name_info = QHBoxLayout(self)
-        user_name_info.addStretch()
-        user_name_info.addSpacing(5)
         
-        # Create separate object inside the user_name_info vertical layout
-        user_name = QLabel(self)
+
+        
+        # Left group objects (User stats)
+        # Vertical layout for all elements in the left objects group
+        user_stats_layout = QVBoxLayout()
+        user_stats_layout.addStretch()
+        user_stats_layout.addSpacing(5)
+
+        # Vertical layout for the elements in the left objects group (User Name, User ID, User Rank and User Avatar)
+        user_stats_content_layout = QVBoxLayout()
+        user_name = QLabel()
         db_connect.USER_POSTGRES_CURSOR.execute("SELECT current_user;")
         user_name_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
         user_name_result = user_name_result[0]
+        user_name.setText(f"welcome {user_name_result}")
+        user_name.setFont(QFont(families[0], 10))
+        user_name.setStyleSheet("color: #009933;")
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(15)
+        shadow.setOffset(5)
+        user_name.setGraphicsEffect(shadow)
+        
+        user_id = QLabel()
         db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT user_id FROM users WHERE user_name = '{user_name_result}'")
         user_id_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
         user_id_result = user_id_result[0]
+        user_id.setText(f"user id: {user_id_result}")
+        user_id.setFont(QFont(families[0], 10))
+        user_id.setStyleSheet("color: #009933;")
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(15)
+        shadow.setOffset(5)
+        user_id.setGraphicsEffect(shadow)
+        
+        user_rank = QLabel()
         db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT user_rank FROM users WHERE user_name = '{user_name_result}'")
         user_rank_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
         user_rank_result = user_rank_result[0]
-        user_name.setText(f"hello {user_name_result}\nid: {user_id_result}\nrank: {user_rank_result}")
-        user_name.setFont(QFont(families[0], 10))
-        user_name.setAlignment(Qt.AlignLeft)
-        
-        # Create User Avatar
-        image = QImage()
-        url_image = r'https://github.com/karastoyanov/Rock-Paper-Scissors/blob/dev/images/avatars/soldier2.png?raw=true'
-        image.loadFromData(requests.get(url_image).content)
-        user_avatar_label = QLabel(self)
-        user_avatar_label.setPixmap(QPixmap(image))
-        user_avatar_label.setMaximumHeight(150)
-        user_avatar_label.setMaximumWidth(150)
-        user_avatar_label.setAlignment(Qt.AlignLeft)
-        
-        total_games_played = QLabel(self)
-        db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT total_games FROM users where user_name = '{user_name_result}'")
-        total_games_played_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
-        total_games_played_result = total_games_played_result[0]
-        total_games_played.setText(f'total games played: {total_games_played_result}\n')
-        total_games_played.setFont(QFont(families[0], 10))
-        total_games_played.setAlignment(Qt.AlignLeft)
-        
-        total_points = QLabel(self)
+        user_rank.setText(f"rank: {user_rank_result}")
+        user_rank.setFont(QFont(families[0], 10))
+        user_rank.setStyleSheet("color: #009933;")
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(15)
+        shadow.setOffset(5)
+        user_rank.setGraphicsEffect(shadow)      
+
+        total_games = QLabel()
+        db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT total_games FROM users WHERE user_name = '{user_name_result}'")
+        total_games_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        total_games_result = total_games_result[0]
+        total_games.setText(f"total games played: {total_games_result}")
+        total_games.setFont(QFont(families[0], 10))
+        total_games.setStyleSheet("color: #009933;")
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(15)
+        shadow.setOffset(5)
+        total_games.setGraphicsEffect(shadow)
+
+        total_points = QLabel()
         db_connect.USER_POSTGRES_CURSOR.execute(f"SELECT total_points FROM users WHERE user_name = '{user_name_result}'")
         total_points_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
         total_points_result = total_points_result[0]
         total_points.setText(f"total points: {total_points_result}")
         total_points.setFont(QFont(families[0], 10))
-        total_points.setAlignment(Qt.AlignLeft)
+        total_points.setStyleSheet("color: #009933;")
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(15)
+        shadow.setOffset(5)
+        total_points.setGraphicsEffect(shadow)
+        
+        
+        
+        
+        # Add items to the first line on the left side
+        user_stats_content_layout.addWidget(user_name)
+        user_stats_content_layout.addWidget(user_id)
+        user_stats_content_layout.addWidget(user_rank)
+        user_stats_content_layout.addWidget(total_games)
+        user_stats_content_layout.addWidget(total_points)
+        # Add items to the left side
+        user_stats_layout.addLayout(user_stats_content_layout)
 
-        user_name_info.addWidget(user_name)
-        user_name_info.addWidget(user_avatar_label)
-        user_name_info.addWidget(total_games_played)
-        user_name_info.addWidget(total_points)
-        group_two.setLayout(user_name_info)
 
-        # Add right section to the user layout and allign it to right(left is reserved for buttons)
-        user_layout.addWidget(group_two)
-        user_layout.setAlignment(Qt.AlignRight)
-        user_layout.addStretch()
-        user_layout.addSpacing(5)
+        # Main Layout Init
+        main_layout = QHBoxLayout()
+        main_layout.addLayout(user_stats_layout)
+        main_layout.addLayout(buttons_layout)
 
-        horizontal_layout.addLayout(buttons_layout)
-        horizontal_layout.addLayout(user_layout)
-        horizontal_layout.addStretch()
-        horizontal_layout.addSpacing(5)
-
-        # Main Layout
-        main_layout = QVBoxLayout()
-        main_layout.addLayout(horizontal_layout)
         self.setLayout(main_layout)
         self.show()
         
@@ -169,3 +187,4 @@ def init_window():
 #app = QApplication(sys.argv)
 #window = start_app()
 #app.exec_()
+
