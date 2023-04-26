@@ -72,8 +72,34 @@ class MainMenu(QWidget):
         
         right_dummy_group = QGroupBox(self)
         right_dummy_group.setFixedWidth(300)
-        right_dummy_group.setFixedHeight(100)
+        right_dummy_group.setFixedHeight(80)
+       
+
+        dummy_layout = QVBoxLayout()
+        current_version = QLabel()
+        current_version.setText("Current Version: 2.0-alpha")
+        current_version.setFont(QFont('Calibri', 9))
+
+        current_server_version = QLabel()
+        db_connect.USER_POSTGRES_CURSOR.execute(f"SHOW server_version")
+        current_server_version_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        server_version = current_server_version_result[0]
+        linux_version = server_version[6:17]
+        postgre_version = server_version[0:4]
+        current_server_version.setText(f"Current PostgreSQL version: {postgre_version}")
+        current_server_version.setFont(QFont('Calibri', 9))
+        current_linux_version = QLabel()
+        current_linux_version.setText(f"Current Linux version: {linux_version}")
+        current_linux_version.setFont(QFont('Calibri', 9))
+
         
+
+        dummy_layout.addWidget(current_version)
+        dummy_layout.addWidget(current_server_version)
+        dummy_layout.addWidget(current_linux_version)
+
+        right_dummy_group.setLayout(dummy_layout)
+
         buttons_layout.addWidget(play_button)
         buttons_layout.addWidget(all_players_ranklist)
         buttons_layout.addWidget(edit_user_button)
