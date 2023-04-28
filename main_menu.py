@@ -15,7 +15,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 # from colorama import Fore
 import sys, requests
-import db_connect, login
+import db_connect, login, game
+
 
 def start_app():
     global win
@@ -32,6 +33,7 @@ class MainMenu(QWidget):
         self.setMaximumHeight(300)
         self.initUI()
 
+
     def initUI(self):
         # Fonts setting
         font = QFontDatabase.addApplicationFont(r'fonts/ElementalEnd.ttf')
@@ -45,36 +47,35 @@ class MainMenu(QWidget):
         buttons_layout.addSpacing(5)
         
         play_button = QPushButton(self)
+        play_button.clicked.connect(lambda : open_new_game())
         play_button.setText("play new game")
         play_button.setFont(QFont(families[0], 12))
         play_button.setFixedWidth(300)
-        play_button.setStyleSheet("background-color: #009933; color: #FFFFFF;")
-
+        play_button.setStyleSheet("background-color: #B30000; color: #000000;")
 
         all_players_ranklist = QPushButton(self)
         all_players_ranklist.setText("players ranklist")
         all_players_ranklist.setFont(QFont(families[0], 12))
         all_players_ranklist.setFixedWidth(300)
-        all_players_ranklist.setStyleSheet("background-color: #009933; color: #FFFFFF;")
+        all_players_ranklist.setStyleSheet("background-color: #B30000; color: #000000;")
 
         edit_user_button = QPushButton(self)
         edit_user_button.setText("edit user")
         edit_user_button.setFont(QFont(families[0], 12))
         edit_user_button.setFixedWidth(300)
-        edit_user_button.setStyleSheet("background-color: #009933; color: #FFFFFF;")
+        edit_user_button.setStyleSheet("background-color: #B30000; color: #000000;")
 
         logout = QPushButton(self)
         logout.clicked.connect(lambda : open_logout())
         logout.setText("logout")
         logout.setFont(QFont(families[0], 12))
         logout.setFixedWidth(300)
-        logout.setStyleSheet("background-color: #009933; color: #FFFFFF;")
+        logout.setStyleSheet("background-color: #B30000; color: #000000;")
         
         right_dummy_group = QGroupBox(self)
         right_dummy_group.setFixedWidth(300)
         right_dummy_group.setFixedHeight(80)
        
-
         dummy_layout = QVBoxLayout()
         current_version = QLabel()
         current_version.setText("Current Version: 2.0-alpha")
@@ -92,8 +93,6 @@ class MainMenu(QWidget):
         current_linux_version.setText(f"Current Linux version: {linux_version}")
         current_linux_version.setFont(QFont('Calibri', 9))
 
-        
-
         dummy_layout.addWidget(current_version)
         dummy_layout.addWidget(current_server_version)
         dummy_layout.addWidget(current_linux_version)
@@ -110,7 +109,6 @@ class MainMenu(QWidget):
         buttons_layout.addSpacing(5)
         
         
-
         
         # Left group objects (User stats)
         # Vertical layout for all elements in the left objects group
@@ -126,7 +124,7 @@ class MainMenu(QWidget):
         user_name_result = user_name_result[0]
         user_name.setText(f"welcome {user_name_result}")
         user_name.setFont(QFont(families[0], 10))
-        user_name.setStyleSheet("color: #009933;")
+        user_name.setStyleSheet("color: #B30000;")
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(15)
         shadow.setOffset(5)
@@ -138,7 +136,7 @@ class MainMenu(QWidget):
         user_id_result = user_id_result[0]
         user_id.setText(f"user id: {user_id_result}")
         user_id.setFont(QFont(families[0], 10))
-        user_id.setStyleSheet("color: #009933;")
+        user_id.setStyleSheet("color: #B30000;")
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(15)
         shadow.setOffset(5)
@@ -150,7 +148,7 @@ class MainMenu(QWidget):
         user_rank_result = user_rank_result[0]
         user_rank.setText(f"rank: {user_rank_result}")
         user_rank.setFont(QFont(families[0], 10))
-        user_rank.setStyleSheet("color: #009933;")
+        user_rank.setStyleSheet("color: #B30000;")
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(15)
         shadow.setOffset(5)
@@ -162,7 +160,7 @@ class MainMenu(QWidget):
         total_games_result = total_games_result[0]
         total_games.setText(f"total games played: {total_games_result}")
         total_games.setFont(QFont(families[0], 10))
-        total_games.setStyleSheet("color: #009933;")
+        total_games.setStyleSheet("color: #B30000;")
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(15)
         shadow.setOffset(5)
@@ -174,7 +172,7 @@ class MainMenu(QWidget):
         total_points_result = total_points_result[0]
         total_points.setText(f"total points: {total_points_result}")
         total_points.setFont(QFont(families[0], 10))
-        total_points.setStyleSheet("color: #009933;")
+        total_points.setStyleSheet("color: #B30000;")
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(15)
         shadow.setOffset(5)
@@ -192,7 +190,6 @@ class MainMenu(QWidget):
         # Add items to the left side
         user_stats_layout.addLayout(user_stats_content_layout)
 
-
         # Main Layout Init
         main_layout = QHBoxLayout()
         main_layout.addLayout(user_stats_layout)
@@ -201,16 +198,18 @@ class MainMenu(QWidget):
         self.setLayout(main_layout)
         self.show()
         
+        def open_new_game():
+            db_connect.database_connect()
+            db_connect.POSTGRES_CURSOR.execute(f"UPDATE users SET total_games = total_games + 1 WHERE user_name = '{user_name_result}'")
+            db_connect.POSTGRES_CONNECTION.commit()
+            game.start_app()
+            win.hide()
+        
         def open_logout():
             login.start_app()
             win.hide()
-
+    
 def init_window():
     app = QApplication(sys.argv)
     window = start_app()
     app.exec_()
-
-#app = QApplication(sys.argv)
-#window = start_app()
-#app.exec_()
-

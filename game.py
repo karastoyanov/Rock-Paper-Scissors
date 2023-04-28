@@ -5,7 +5,13 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys, random
 
-class MainMenu(QWidget):
+
+def start_app():
+    global win
+    win = Game()
+    win.show()
+
+class Game(QWidget):
     
     # Global variables for keeping the score and displaying a message at the end of each round
     PLAYER_POINTS = 0 
@@ -64,11 +70,11 @@ class MainMenu(QWidget):
 
         # Rock Button
         rock_button = QPushButton(self)
-        rock_button.clicked.connect(lambda : MainMenu.game_round("rock"))
-        rock_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER POINTS: {MainMenu.PLAYER_POINTS}'))
-        rock_button.clicked.connect(lambda : result_counter_ai.setText(f'AI POINTS: {MainMenu.AI_POINTS}'))
-        rock_button.clicked.connect(lambda : round_message_label.setText(f'[{MainMenu.ROUND_MESSAGE}]'))
-        rock_button.clicked.connect(lambda : round_result_text.setText(MainMenu.ROUND_RESULT))
+        rock_button.clicked.connect(lambda : Game.game_round("rock"))
+        rock_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER POINTS: {Game.PLAYER_POINTS}'))
+        rock_button.clicked.connect(lambda : result_counter_ai.setText(f'AI POINTS: {Game.AI_POINTS}'))
+        rock_button.clicked.connect(lambda : round_message_label.setText(f'[{Game.ROUND_MESSAGE}]'))
+        rock_button.clicked.connect(lambda : round_result_text.setText(Game.ROUND_RESULT))
         rock_button.setIcon(QIcon(r'images/stone.png'))
         rock_button.setIconSize(QSize(30, 30))
         rock_button.setText("Rock")
@@ -76,11 +82,11 @@ class MainMenu(QWidget):
         
         # Paper Button
         paper_button = QPushButton(self)
-        paper_button.clicked.connect(lambda : MainMenu.game_round("paper"))
-        paper_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER POINTS: {MainMenu.PLAYER_POINTS}'))
-        paper_button.clicked.connect(lambda : result_counter_ai.setText(f'AI POINTS: {MainMenu.AI_POINTS}'))
-        paper_button.clicked.connect(lambda : round_message_label.setText(f'[{MainMenu.ROUND_MESSAGE}]'))
-        paper_button.clicked.connect(lambda : round_result_text.setText(MainMenu.ROUND_RESULT))
+        paper_button.clicked.connect(lambda : Game.game_round("paper"))
+        paper_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER POINTS: {Game.PLAYER_POINTS}'))
+        paper_button.clicked.connect(lambda : result_counter_ai.setText(f'AI POINTS: {Game.AI_POINTS}'))
+        paper_button.clicked.connect(lambda : round_message_label.setText(f'[{Game.ROUND_MESSAGE}]'))
+        paper_button.clicked.connect(lambda : round_result_text.setText(Game.ROUND_RESULT))
         paper_button.setIcon(QIcon(r'images/file.png'))
         paper_button.setIconSize(QSize(30, 30))
         paper_button.setText("Paper")
@@ -88,11 +94,11 @@ class MainMenu(QWidget):
         
         # Scissor Button
         scissors_button = QPushButton(self)
-        scissors_button.clicked.connect(lambda : MainMenu.game_round("scissors"))
-        scissors_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER POINTS: {MainMenu.PLAYER_POINTS}'))
-        scissors_button.clicked.connect(lambda : result_counter_ai.setText(f'AI POINTS: {MainMenu.AI_POINTS}'))
-        scissors_button.clicked.connect(lambda : round_message_label.setText(f'[{MainMenu.ROUND_MESSAGE}]'))
-        scissors_button.clicked.connect(lambda : round_result_text.setText(MainMenu.ROUND_RESULT))
+        scissors_button.clicked.connect(lambda : Game.game_round("scissors"))
+        scissors_button.clicked.connect(lambda : result_counter_player.setText(f'PLAYER POINTS: {Game.PLAYER_POINTS}'))
+        scissors_button.clicked.connect(lambda : result_counter_ai.setText(f'AI POINTS: {Game.AI_POINTS}'))
+        scissors_button.clicked.connect(lambda : round_message_label.setText(f'[{Game.ROUND_MESSAGE}]'))
+        scissors_button.clicked.connect(lambda : round_result_text.setText(Game.ROUND_RESULT))
         scissors_button.setIcon(QIcon(r'images/scissors.png'))
         scissors_button.setIconSize(QSize(30, 30))
         scissors_button.setText("Scissors")
@@ -121,7 +127,7 @@ class MainMenu(QWidget):
         round_result = QVBoxLayout()
         round_result.addSpacing(10)
         round_result_text = QLabel(self)
-        round_result_text.setText(MainMenu.ROUND_RESULT)
+        round_result_text.setText(Game.ROUND_RESULT)
         round_result_text.setFont(QFont(families[0], 10))
         round_result_text.setAlignment(Qt.AlignCenter)
         round_result.addWidget(round_result_text)
@@ -133,11 +139,11 @@ class MainMenu(QWidget):
         result_counter = QVBoxLayout()
         result_counter.addSpacing(50)
         result_counter_player = QLabel(self)
-        result_counter_player.setText(f'PLAYER POINTS: {MainMenu.PLAYER_POINTS}') 
+        result_counter_player.setText(f'PLAYER POINTS: {Game.PLAYER_POINTS}') 
         result_counter_player.setFont(QFont(families[0], 10))
         result_counter_player.setAlignment(Qt.AlignCenter)
         result_counter_ai = QLabel(self)
-        result_counter_ai.setText(f'AI POINTS: {MainMenu.AI_POINTS}')
+        result_counter_ai.setText(f'AI POINTS: {Game.AI_POINTS}')
         result_counter_ai.setFont(QFont(families[0], 10))
         result_counter_ai.setAlignment(Qt.AlignCenter)
         result_counter.addWidget(result_counter_player)
@@ -165,49 +171,49 @@ class MainMenu(QWidget):
             if ai_choice == "rock":
                 print("Tie!")
                 player_wins, ai_wins = False, False
-                MainMenu.ROUND_RESULT = "It's a tie!"
+                Game.ROUND_RESULT = "It's a tie!"
             elif ai_choice == "paper":
                 print("Computer wins!")
                 player_wins, ai_wins = False, True
-                MainMenu.AI_POINTS += 1
-                MainMenu.ROUND_RESULT = 'You have lost!'
+                Game.AI_POINTS += 1
+                Game.ROUND_RESULT = 'You have lost!'
             elif ai_choice == "scissors":
                 print("Player wins!")
                 player_wins, ai_wins = True, False
-                MainMenu.PLAYER_POINTS += 1
-                MainMenu.ROUND_RESULT = 'You have won!'
+                Game.PLAYER_POINTS += 1
+                Game.ROUND_RESULT = 'You have won!'
 
         if player_choice == "paper":
             if ai_choice == "rock":
                 print("Player wins!")
                 player_wins, ai_wins = True, False
-                MainMenu.PLAYER_POINTS += 1
-                MainMenu.ROUND_RESULT = 'You have won!'
+                Game.PLAYER_POINTS += 1
+                Game.ROUND_RESULT = 'You have won!'
             elif ai_choice == "paper":
                 print("Tie!")
                 player_wins, ai_wins = False, False
-                MainMenu.ROUND_RESULT = "It's a tie!"
+                Game.ROUND_RESULT = "It's a tie!"
             elif ai_choice == "scissors":
                 print("Computer wins!")
                 player_wins, ai_wins = False, True
-                MainMenu.AI_POINTS += 1
-                MainMenu.ROUND_RESULT = 'You have lost!'
+                Game.AI_POINTS += 1
+                Game.ROUND_RESULT = 'You have lost!'
 
         if player_choice == "scissors":
             if ai_choice == "rock":
                 print("Computer wins!")
                 player_wins, ai_wins = False, True
-                MainMenu.AI_POINTS += 1
-                MainMenu.ROUND_RESULT = 'You have lost!'
+                Game.AI_POINTS += 1
+                Game.ROUND_RESULT = 'You have lost!'
             elif ai_choice == "paper":
                 print("Player wins!")
                 player_wins, ai_wins = True, False
-                MainMenu.PLAYER_POINTS += 1
-                MainMenu.ROUND_RESULT = 'You have won!'
+                Game.PLAYER_POINTS += 1
+                Game.ROUND_RESULT = 'You have won!'
             elif ai_choice == "scissors":
                 print("Tie!")
                 player_wins, ai_wins = False, False
-                MainMenu.ROUND_RESULT = "It's a tie!"
+                Game.ROUND_RESULT = "It's a tie!"
         
         player_wins_messages = [
             "Good job, soldier!",
@@ -230,12 +236,9 @@ class MainMenu(QWidget):
             round_message = random.choice(ai_wins_messages)
         elif player_wins == False and ai_wins == False:
             round_message = random.choice(tie_messages)
-        MainMenu.ROUND_MESSAGE = round_message
+        Game.ROUND_MESSAGE = round_message
 
-def init_app():
-        app = QApplication(sys.argv)
-        window = MainMenu()
-        window.show()
-        app.exec()
-
-
+def init_window():
+    app = QApplication(sys.argv)
+    window = start_app()
+    app.exec_()
