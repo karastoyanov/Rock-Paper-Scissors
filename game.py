@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QLineEd
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys, random
+import db_connect
 
 
 def start_app():
@@ -162,6 +163,14 @@ class Game(QWidget):
 
     # Main Game Funcionality and Message Handling
     def game_round(player_choice):
+        db_connect.database_connect() # Init connection to the database(Admin access needed to update the result)
+        # Each time when the player wins, 1 point should be added to his `total_points` column in PostgreSQL users table
+        
+        # Get the current logged-in player
+        db_connect.USER_POSTGRES_CURSOR.execute("SELECT current_user;")
+        user_name_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
+        user_name_result = user_name_result[0]
+        
         possible_ai_choice = ["rock", "paper", "scissors"]
         ai_choice = random.choice(possible_ai_choice)
         player_wins = False
@@ -179,6 +188,8 @@ class Game(QWidget):
                 Game.ROUND_RESULT = 'You have lost!'
             elif ai_choice == "scissors":
                 print("Player wins!")
+                db_connect.POSTGRES_CURSOR.execute(f"UPDATE users SET total_points = total_points + 1 WHERE user_name = '{user_name_result}'")
+                db_connect.POSTGRES_CONNECTION.commit()
                 player_wins, ai_wins = True, False
                 Game.PLAYER_POINTS += 1
                 Game.ROUND_RESULT = 'You have won!'
@@ -186,6 +197,8 @@ class Game(QWidget):
         if player_choice == "paper":
             if ai_choice == "rock":
                 print("Player wins!")
+                db_connect.POSTGRES_CURSOR.execute(f"UPDATE users SET total_points = total_points + 1 WHERE user_name = '{user_name_result}'")
+                db_connect.POSTGRES_CONNECTION.commit()
                 player_wins, ai_wins = True, False
                 Game.PLAYER_POINTS += 1
                 Game.ROUND_RESULT = 'You have won!'
@@ -207,6 +220,8 @@ class Game(QWidget):
                 Game.ROUND_RESULT = 'You have lost!'
             elif ai_choice == "paper":
                 print("Player wins!")
+                db_connect.POSTGRES_CURSOR.execute(f"UPDATE users SET total_points = total_points + 1 WHERE user_name = '{user_name_result}'")
+                db_connect.POSTGRES_CONNECTION.commit()
                 player_wins, ai_wins = True, False
                 Game.PLAYER_POINTS += 1
                 Game.ROUND_RESULT = 'You have won!'

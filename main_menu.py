@@ -199,7 +199,8 @@ class MainMenu(QWidget):
         self.show()
         
         def open_new_game():
-            db_connect.database_connect()
+            db_connect.database_connect() # Init connection to the database(Admin access needed to update the total_games)
+            
             db_connect.POSTGRES_CURSOR.execute(f"UPDATE users SET total_games = total_games + 1 WHERE user_name = '{user_name_result}'")
             db_connect.POSTGRES_CONNECTION.commit()
             game.start_app()
