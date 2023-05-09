@@ -170,6 +170,8 @@ class Game(QWidget):
         db_connect.USER_POSTGRES_CURSOR.execute("SELECT current_user;")
         user_name_result = db_connect.USER_POSTGRES_CURSOR.fetchone()
         user_name_result = user_name_result[0]
+        user_name_result = user_name_result.split('_', 1)
+        user_name_result = user_name_result[0]
         
         possible_ai_choice = ["rock", "paper", "scissors"]
         ai_choice = random.choice(possible_ai_choice)
