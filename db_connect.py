@@ -15,7 +15,7 @@ def database_connect():
 
     LINUX_USERNAME = config('LINUX_USERNAME')
     LINUX_PASSWORD = config('LINUX_PASSWORD')
-    LINUX_ADDRESS = config('LINUX_IP_ADDRESS')
+    LINUX_IP_ADDRESS = config('LINUX_IP_ADDRESS')
 
     DB_USERNAME = config('DB_USERNAME')
     DB_PASSWORD = config('DB_PASSWORD')
@@ -23,7 +23,7 @@ def database_connect():
     DB_PORT = config('DB_PORT')
 
     tunnel = sshtunnel.SSHTunnelForwarder(
-            (str(LINUX_ADDRESS), 22),
+            (str(LINUX_IP_ADDRESS), 22),
             ssh_username = str(LINUX_USERNAME),
             ssh_password = str(LINUX_PASSWORD),
             remote_bind_address = ('127.0.0.1', 5432)
@@ -33,7 +33,7 @@ def database_connect():
     db_client = psycopg2.connect(
             user = str(DB_USERNAME),
             password = str(DB_PASSWORD),
-            host = str(LINUX_ADDRESS),
+            host = str(LINUX_IP_ADDRESS),
             port = DB_PORT,
             dbname = str(DB_NAME)
             )
@@ -52,7 +52,7 @@ def user_connect(user_name, user_passwd):
     
     LINUX_USERNAME = config('LINUX_USERNAME')
     LINUX_PASSWORD = config('LINUX_PASSWORD')
-    LINUX_ADDRESS = config('LINUX_IP_ADDRESS')
+    LINUX_IP_ADDRESS = config('LINUX_IP_ADDRESS')
     
 
     DB_USERNAME = user_name + "_rpsuser"
@@ -60,24 +60,24 @@ def user_connect(user_name, user_passwd):
     DB_NAME = config('DB_NAME')
     DB_PORT = config('DB_PORT')
 
-    tunnel = sshtunnel.SSHTunnelForwarder(
-            (str(LINUX_ADDRESS), 22),
+    user_tunnel = sshtunnel.SSHTunnelForwarder(
+            (str(LINUX_IP_ADDRESS), 22),
             ssh_username = str(LINUX_USERNAME),
             ssh_password = str(LINUX_PASSWORD),
             remote_bind_address = ('127.0.0.1', 5432)
             )
-    tunnel.start()
+    user_tunnel.start()
 
-    db_client = psycopg2.connect(
+    user_db_client = psycopg2.connect(
             user = str(DB_USERNAME),
             password = str(DB_PASSWORD),
-            host = str(LINUX_ADDRESS),
+            host = str(LINUX_IP_ADDRESS),
             port = DB_PORT,
             dbname = str(DB_NAME)
             )
-    cursor = db_client.cursor()
+    user_cursor = user_db_client.cursor()
 
-    USER_POSTGRES_CURSOR = cursor
-    USER_POSTGRES_CONNECTION = db_client
+    USER_POSTGRES_CURSOR = user_cursor
+    USER_POSTGRES_CONNECTION = user_db_client
 
 #database_connect()
